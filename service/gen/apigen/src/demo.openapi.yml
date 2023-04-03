@@ -1,0 +1,128 @@
+openapi: '2.0'
+info:
+  title: Demo
+  version: 0.0.1
+  description: Demo API
+paths:
+  /domain/folders:
+    post:
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/FolderCreateRequest'
+        required: true
+      tags:
+        - folders
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/FolderDetails'
+          description: OK
+      #        '400':
+      #          $ref: 'common.yml#/components/responses/400Error'
+      #        '403':
+      #          $ref: 'common.yml#/components/responses/403Error'
+      #        '404':
+      #          $ref: 'common.yml#/components/responses/404Error'
+      operationId: createFolder
+      summary: Create folder.
+components:
+  schemas:
+    FolderDetails:
+      description: Dane szczegółowe teczki.
+      allOf:
+        - $ref: '#/components/schemas/Versioned'
+        - type: object
+          properties:
+            typeKey:
+              description: Rodzaj teczki
+              type: string
+    FolderCreateRequest:
+      description: Żądanie utworzenia nowej teczki.
+      required:
+        - typeKey
+      type: object
+      properties:
+        typeKey:
+          description: 'Typ tworzonej teczki'
+          type: string
+    VersionedPageableSearchFilter:
+      description: Obiekt VersionedSearchFilter wzbogacony o parametry page dla żądań
+      type: object
+      properties:
+        page:
+          type: integer
+        size:
+          type: integer
+        sort:
+          type: array
+          description: Parametry sortowania
+          items:
+            type: string
+        authorIdIn:
+          description: Identyfikatory autorów obiektu
+          type: array
+          items:
+            format: uuid
+            type: string
+        modifierIdIn:
+          description: Identyfikatory osób modyfikujących zasób
+          type: array
+          items:
+            format: uuid
+            type: string
+        createdLessThanOrEqual:
+          format: date-time
+          description: Utworzono przed lub w punkcie czasu
+          type: string
+        createdGreaterThanOrEqual:
+          format: date-time
+          description: Utworzono po lub w punkcie czasu
+          type: string
+        modifiedLessThanOrEqual:
+          format: date-time
+          description: Zmodyfikowano przed lub w punkcie czasu
+          type: string
+        modifiedGreaterThanOrEqual:
+          format: date-time
+          description: Zmodyfikowano po lub w punkcie czasu
+          type: string
+        includeDeleted:
+          description: Obejmij obiekty usunięte
+          type: boolean
+    FolderSearchFilter:
+      allOf:
+        - $ref: '#/components/schemas/VersionedPageableSearchFilter'
+        - type: object
+          properties:
+            typeKeyIn:
+              description: Lista typów teczek
+              type: array
+              items:
+                description: Typ teczki
+                type: string
+    Versioned:
+      description: Versioned
+      type: object
+      properties:
+        id:
+          format: uuid
+          description: Identyfikator
+          type: string
+        created:
+          format: date-time
+          description: Data utworzenia
+          type: string
+        modified:
+          format: date-time
+          description: Data modyfikacji
+          type: string
+        version:
+          description: Wersja
+          type: integer
+        deleted:
+          description: Czy obiekt jest oznaczony jako usunięty
+          type: boolean

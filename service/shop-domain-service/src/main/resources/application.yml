@@ -1,0 +1,29 @@
+spring:
+  application.name: shop-domain-service
+  jmx.enabled: false
+  jpa:
+    open-in-view: false
+    properties.hibernate:
+      default_schema: shop_domain
+      event.merge.entity_copy_observer: allow
+      dialect: org.hibernate.dialect.PostgreSQL95Dialect
+  datasource:
+    type: com.zaxxer.hikari.HikariDataSource
+    hikari:
+      minimumIdle: 4
+      maximumPoolSize: 6
+      idleTimeout: 30000
+      maxLifetime: 60000
+      connectionTimeout: 5000
+  hibernate.connection.provider_class: org.hibernate.hikaricp.internal.HikariCPConnectionProvider
+  jackson.serialization.WRITE_DATES_AS_TIMESTAMPS: false
+  cloud.stream.default:
+    group: ${spring.application.name}
+    contentType: application/json;charset=UTF-8
+  kafka.consumer.group-id: ${spring.application.name}
+  main.allow-bean-definition-overriding: true
+  flyway:
+    locations: classpath:db/migration
+    schemas[0]: ${spring.jpa.properties.hibernate.default_schema}
+    baseline-on-migrate: true
+    validateMigrationNaming: true
