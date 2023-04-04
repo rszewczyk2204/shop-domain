@@ -1,27 +1,27 @@
 package pl.com.web.shop.domain.item;
 
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
-import pl.com.web.shop.domain.item.model.Item;
-import pl.com.web.shop.domain.item.model.dto.ItemCreateRequestDto;
+import pl.com.web.shop.domain.item.model.ItemsApi;
+import pl.com.web.shop.domain.item.model.outside.ItemCreateRequest;
+import pl.com.web.shop.domain.item.model.outside.ItemDetails;
 
-import javax.validation.Valid;
-import javax.validation.constraints.NotNull;
-
+@Slf4j
 @Validated
 @RestController
 @RequiredArgsConstructor
-public class ItemController {
+public class ItemController implements ItemsApi {
     private final ItemService service;
+    private final ItemMapper itemMapper;
 
-    @RequestMapping(value = "/shop-domain/items", produces = {"application/json"}, consumes = {"application/json"}, method = {RequestMethod.POST})
-    public ResponseEntity<Item> createItem(@RequestBody @NotNull @Valid ItemCreateRequestDto requestDto) {
-        Item item = service.createItem(requestDto);
-        return ResponseEntity.ok(item);
+    public ResponseEntity<ItemDetails> createItem(ItemCreateRequest request) {
+        log.info("Creating an item");
+        var dto = itemMapper.createRequestDto(request);
+        var details = service.createItem(dto);
+        log.debug(String.format("Created an item with given id, %s", details.getId()));
+        return ResponseEntity.ok(details);
     }
 }

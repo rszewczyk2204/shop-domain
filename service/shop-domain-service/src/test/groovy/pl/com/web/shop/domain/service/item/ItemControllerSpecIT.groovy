@@ -1,21 +1,34 @@
 package pl.com.web.shop.domain.service.item
 
+import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
-import pl.com.web.shop.domain.item.model.Item
-import pl.com.web.shop.domain.item.model.dto.ItemCreateRequestDto
+import pl.com.web.shop.domain.item.model.outside.ItemCreateRequest
+import pl.com.web.shop.domain.item.model.outside.ItemDetails
+import pl.com.web.shop.domain.item.repository.ItemRepository
 import pl.com.web.shop.domain.service.common.ShopRestSpecIT.ShopRestSpecIT
+import pl.com.web.shop.domain.service.item.helper.ItemApiHelper
+import pl.com.web.shop.domain.service.item.helper.ItemHelper
+import pl.com.web.shop.domain.service.item.helper.ItemServiceHelper
+
 
 class ItemControllerSpecIT extends ShopRestSpecIT {
 
+    @Autowired
+    ItemRepository itemRepository
+
+    @Autowired
+    ItemServiceHelper itemServiceHelper
 
     void "should create item"() {
         given:
-        ItemCreateRequestDto requestDto = new ItemCreateRequestDto()
-        requestDto.name = "Test"
+            ItemCreateRequest request = ItemApiHelper.itemCreateRequest(name: "test")
         when:
-        ResponseEntity<Item> response = httpPost("/shop-domain/items", requestDto, Item)
+            ResponseEntity<ItemDetails> response = httpPost("/shop-domain/items", request, ItemDetails)
         then:
-        response.statusCode == HttpStatus.OK
+            response.statusCode == HttpStatus.OK
+            with(itemServiceHelper.getItem(response.body.id)) {
+                ItemHelper.compare(it, response.body)
+            }
     }
 }
