@@ -8,6 +8,9 @@ import org.springframework.web.bind.annotation.RestController;
 import pl.com.web.shop.domain.item.model.ItemsApi;
 import pl.com.web.shop.domain.item.model.outside.ItemCreateRequest;
 import pl.com.web.shop.domain.item.model.outside.ItemDetails;
+import pl.com.web.shop.domain.item.model.outside.ItemUpdateRequest;
+
+import java.util.UUID;
 
 @Slf4j
 @Validated
@@ -22,6 +25,15 @@ public class ItemController implements ItemsApi {
         var dto = itemMapper.createRequestDto(request);
         var details = service.createItem(dto);
         log.debug(String.format("Created an item with given id, %s", details.getId()));
+        return ResponseEntity.ok(details);
+    }
+
+    @Override
+    public ResponseEntity<ItemDetails> updateItem(UUID itemId, ItemUpdateRequest request) {
+        log.info("Updating an item");
+        var dto = itemMapper.updateRequestDto(request);
+        var details = service.updateItem(itemId, dto);
+        log.debug(String.format("Updated an item with given id, %s", details.getId()));
         return ResponseEntity.ok(details);
     }
 }

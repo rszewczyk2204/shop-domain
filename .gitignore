@@ -18,3 +18,8 @@
 /service/shop-domain-service/target/maven-status/maven-compiler-plugin/compile/compile/inputFiles.lst
 /service/shop-domain-service/target/maven-status/maven-compiler-plugin/compile/java-compile/inputFiles.lst
 /service/shop-domain-service/target/
+/service/shop-domain-common/shop-domain-common.iml
+/service/shop-domain-common/.flattened-pom.xml
+/service/shop-domain-common/target/classes/classpath.index
+/service/shop-domain-common/target/maven-status/maven-compiler-plugin/compile/java-compile/createdFiles.lst
+/service/shop-domain-common/target/maven-status/maven-compiler-plugin/compile/java-compile/inputFiles.lst

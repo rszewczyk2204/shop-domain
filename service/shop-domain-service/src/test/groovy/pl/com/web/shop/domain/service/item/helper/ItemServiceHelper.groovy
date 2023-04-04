@@ -11,6 +11,16 @@ class ItemServiceHelper {
     @Autowired
     ItemRepository itemRepository
 
+    Item saveItem(Map args = [:]) {
+        saveItem(ItemHelper.itemEntity(args))
+    }
+
+    Item saveItem(Item item) {
+        item = itemRepository.saveAndFlush(item)
+
+        getItem(item.id)
+    }
+
     Item getItem(UUID id) {
         itemRepository.get(id)
     }

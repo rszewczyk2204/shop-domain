@@ -4,13 +4,15 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.validation.annotation.Validated;
-import pl.com.web.shop.domain.item.model.entity.Item;
 import pl.com.web.shop.domain.item.model.dto.ItemCreateRequestDto;
-import pl.com.web.shop.domain.item.model.outside.ItemDetails;
+import pl.com.web.shop.domain.item.model.dto.ItemUpdateRequestDto;
 import pl.com.web.shop.domain.item.repository.ItemRepository;
+import pl.com.web.shop.domain.item.model.entity.Item;
+import pl.com.web.shop.domain.item.model.outside.ItemDetails;
 
 import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
+import java.util.UUID;
 
 @Service
 @Validated
@@ -23,5 +25,13 @@ public class ItemService {
     public ItemDetails createItem(@NotNull @Valid ItemCreateRequestDto requestDto) {
         Item item = Item.of(requestDto);
         return itemMapper.itemDetails(itemRepository.saveAndFlush(item));
+    }
+
+    @Transactional
+    public ItemDetails updateItem(@NotNull UUID id, @NotNull @Valid ItemUpdateRequestDto requestDto) {
+        Item item = itemRepository.get(id);
+        item.update(requestDto);
+        Item savedItem = itemRepository.saveAndFlush(item);
+        return itemMapper.itemDetails(itemRepository.get(savedItem.getId()));
     }
 }
