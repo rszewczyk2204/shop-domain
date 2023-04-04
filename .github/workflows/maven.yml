@@ -19,6 +19,7 @@ jobs:
 
     runs-on: ubuntu-latest
 
+
     steps:
     - uses: actions/checkout@v3
     - name: Set up JDK 11
@@ -33,9 +34,9 @@ jobs:
         registry: ${{ secrets.ENDPOINT }}
         username: ${{ secrets.NAME }}
         password: ${{ secrets.PASSWORD }}
+    - name: Deploy openapi container
+      run: openapi.azurecr.io/openapi-tools:latest
     - name: Build API
       run: cd apigen | make clean push-java MVN_OPTS="-s $(pwd)/../service/.mvn/settings.xml"
-      with:
-        image: openapi.azurecr.io/openapi-tools:latest
     - name: Build with Maven
       run: mvn -B package --file service/pom.xml
