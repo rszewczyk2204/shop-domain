@@ -27,8 +27,15 @@ jobs:
         java-version: '11'
         distribution: 'temurin'
         cache: maven
+    - name: Log into registry
+      uses: docker/login-action@v1
+      with:
+        registry: ${{ secrets.ENDPOINT }}
+        username: ${{ secrets.NAME }}
+        password: ${{ secrets.PASSWORD }}
     - name: Build API
-      uses: registry.enigma.com.pl/openapi/tools:0.0.36
-      run: cd apigen \ make clean push-java MVN_OPTS="-s $(pwd)/../service/.mvn/settings.xml"
+      run: cd apigen | make clean push-java MVN_OPTS="-s $(pwd)/../service/.mvn/settings.xml"
+      with:
+        image: openapi.azurecr.io/openapi-tools:latest
     - name: Build with Maven
       run: mvn -B package --file service/pom.xml
