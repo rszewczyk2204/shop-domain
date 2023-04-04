@@ -23,3 +23,5 @@
 /service/shop-domain-common/target/classes/classpath.index
 /service/shop-domain-common/target/maven-status/maven-compiler-plugin/compile/java-compile/createdFiles.lst
 /service/shop-domain-common/target/maven-status/maven-compiler-plugin/compile/java-compile/inputFiles.lst
+/service/shop-domain-common/target/
+/service/shop-domain-common/target/classes/
