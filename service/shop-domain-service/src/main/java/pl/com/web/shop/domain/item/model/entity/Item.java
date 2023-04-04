@@ -5,6 +5,7 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import pl.com.web.shop.domain.item.model.dto.ItemCreateRequestDto;
+import pl.com.web.shop.domain.item.model.dto.ItemUpdateRequestDto;
 
 import javax.annotation.Nullable;
 import javax.persistence.Column;
@@ -12,6 +13,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.Version;
+import javax.validation.Valid;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
@@ -49,5 +51,10 @@ public class Item {
                 .name(requestDto.getName())
                 .description(requestDto.getDescription())
                 .build();
+    }
+
+    public void update(@NotNull @Valid ItemUpdateRequestDto requestDto) {
+        setName(name);
+        setDescription(description);
     }
 }

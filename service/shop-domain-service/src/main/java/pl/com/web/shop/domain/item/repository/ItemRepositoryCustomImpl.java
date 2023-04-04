@@ -2,13 +2,12 @@ package pl.com.web.shop.domain.item.repository;
 
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import org.springframework.stereotype.Repository;
+import pl.com.web.shop.domain.item.model.entity.QItem;
 import pl.com.web.shop.domain.item.model.entity.Item;
 
 import javax.persistence.EntityManager;
 import java.util.Optional;
 import java.util.UUID;
-
-import static pl.com.web.shop.domain.item.model.entity.QItem.item;
 
 @Repository
 public class ItemRepositoryCustomImpl implements ItemRepositoryCustom {
@@ -23,9 +22,9 @@ public class ItemRepositoryCustomImpl implements ItemRepositoryCustom {
 
     @Override
     public Optional<Item> findByIdAndDeletedIsFalse(UUID id) {
-        return Optional.ofNullable(queryFactory.select(item)
-                .from(item)
-                .where(item.id.eq(id))
+        return Optional.ofNullable(queryFactory.select(QItem.item)
+                .from(QItem.item)
+                .where(QItem.item.id.eq(id))
                 .fetchOne());
     }
 }
