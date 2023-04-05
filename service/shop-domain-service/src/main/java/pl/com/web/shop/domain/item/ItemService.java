@@ -34,4 +34,10 @@ public class ItemService {
         Item savedItem = itemRepository.saveAndFlush(item);
         return itemMapper.itemDetails(itemRepository.get(savedItem.getId()));
     }
+
+    @Transactional(readOnly = true)
+    public ItemDetails getItem(@NotNull UUID id) {
+        Item item = itemRepository.get(id);
+        return itemMapper.itemDetails(item);
+    }
 }

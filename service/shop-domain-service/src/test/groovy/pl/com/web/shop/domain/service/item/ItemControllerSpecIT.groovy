@@ -3,6 +3,8 @@ package pl.com.web.shop.domain.service.item
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
+import pl.com.web.shop.domain.common.Problem
+import pl.com.web.shop.domain.exception.message.ErrorCodes
 import pl.com.web.shop.domain.item.model.entity.Item
 import pl.com.web.shop.domain.item.model.outside.ItemCreateRequest
 import pl.com.web.shop.domain.item.model.outside.ItemDetails
@@ -45,5 +47,25 @@ class ItemControllerSpecIT extends ShopRestSpecIT {
             with(itemServiceHelper.getItem(response.body.id)) {
                 ItemHelper.compare(it, response.body)
             }
+    }
+
+    void "should get an item"() {
+        given:
+            Item item = itemServiceHelper.saveItem()
+        when:
+            ResponseEntity<ItemDetails> response = httpGet("/shop-domain/items/{itemId}", ItemDetails, item.id)
+        then:
+            response.statusCode == HttpStatus.OK
+            ItemHelper.compare(item, response.body)
+    }
+
+    void "should throw an exception on item not found"() {
+        given:
+            Item item = itemServiceHelper.saveItem()
+        when:
+            ResponseEntity<Problem> response = httpGet("/shop-domain/items/{itemId}", Problem, UUID.randomUUID())
+        then:
+            response.statusCode == HttpStatus.NOT_FOUND
+            response.body.errors*.code == [ErrorCodes.OBJECT_NOT_FOUND.name()]
     }
 }

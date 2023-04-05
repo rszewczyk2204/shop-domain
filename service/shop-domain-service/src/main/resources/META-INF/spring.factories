@@ -1,0 +1,3 @@
+org.springframework.boot.autoconfigure.EnableAutoConfiguration=\
+  pl.com.web.shop.domain.common.ProblemLoggingAutoConfiguration, \
+  pl.com.web.shop.domain.common.ProblemAdviceAutoConfiguration

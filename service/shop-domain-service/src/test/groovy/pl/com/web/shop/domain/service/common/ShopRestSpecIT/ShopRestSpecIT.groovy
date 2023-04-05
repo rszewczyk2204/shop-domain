@@ -28,6 +28,10 @@ class ShopRestSpecIT extends Specification {
         restTemplate.exchange(url, HttpMethod.PUT, new HttpEntity<?>(command, headers), responseType, urlVariables)
     }
 
+    def <T> ResponseEntity<T> httpGet(String url, Class<T> responseType, HttpHeaders headers = defaultHeaders(), Object... urlVariables) {
+        restTemplate.exchange(url, HttpMethod.GET, new HttpEntity<Void>(null, headers), responseType, urlVariables)
+    }
+
     private static HttpHeaders defaultHeaders() {
         HttpHeaders header = new HttpHeaders()
         header.setAccept([MediaType.APPLICATION_JSON])
