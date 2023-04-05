@@ -25,7 +25,7 @@ public interface ItemsApi {
             nickname = "createItem",
             response = ItemDetails.class,
             authorizations = {@Authorization("bearerAuth")},
-            tags = {"drivers"}
+            tags = {"items"}
     )
     @ApiResponses({@ApiResponse(
             code = 200,
@@ -57,7 +57,7 @@ public interface ItemsApi {
             nickname = "updateItem",
             response = ItemDetails.class,
             authorizations = {@Authorization("bearerAuth")},
-            tags = {"drivers"}
+            tags = {"items"}
     )
     @ApiResponses({@ApiResponse(
             code = 200,
