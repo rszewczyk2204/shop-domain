@@ -36,4 +36,12 @@ public class ItemController implements ItemsApi {
         log.debug(String.format("Updated an item with given id, %s", details.getId()));
         return ResponseEntity.ok(details);
     }
+
+    @Override
+    public ResponseEntity<ItemDetails> getItem(UUID itemId) {
+        log.info("Getting an item");
+        var details = service.getItem(itemId);
+        log.debug(String.format("Got an item with given id, %s", details.getId()));
+        return ResponseEntity.ok(details);
+    }
 }
