@@ -114,4 +114,35 @@ public interface ItemsApi {
             method = {RequestMethod.GET}
     )
     ResponseEntity<ItemDetails> getItem(@ApiParam(value = "Identyfikator obiektu", required = true) @PathVariable("itemId") UUID itemId);
+
+    @ApiOperation(
+            value = "Get item.",
+            nickname = "getItem",
+            response = ItemDetails.class,
+            authorizations = {@Authorization("bearerAuth")},
+            tags = {"items"}
+    )
+    @ApiResponses({@ApiResponse(
+            code = 200,
+            message = "OK",
+            response = ItemDetails.class
+    ), @ApiResponse(
+            code = 400,
+            message = "Bad request - the request cannot be handled by the server due to an irregularity perceived as a user's error (e.g. incorrect query syntax).",
+            response = Object.class
+    ), @ApiResponse(
+            code = 403,
+            message = "Forbidden - access denied",
+            response = Object.class
+    ), @ApiResponse(
+            code = 404,
+            message = "Not found",
+            response = Object.class
+    )})
+    @RequestMapping(
+            value = {"/shop-domain/items/{itemId}"},
+            produces = {"application/json"},
+            method = {RequestMethod.DELETE}
+    )
+    ResponseEntity<Void> deleteItem(@ApiParam(value = "Identyfikator obiektu", required = true) @PathVariable("itemId") UUID itemId);
 }

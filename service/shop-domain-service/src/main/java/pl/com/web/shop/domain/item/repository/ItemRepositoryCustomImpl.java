@@ -24,7 +24,15 @@ public class ItemRepositoryCustomImpl implements ItemRepositoryCustom {
     public Optional<Item> findByIdAndDeletedIsFalse(UUID id) {
         return Optional.ofNullable(queryFactory.select(QItem.item)
                 .from(QItem.item)
-                .where(QItem.item.id.eq(id))
+                .where(QItem.item.id.eq(id).and(QItem.item.deleted.isFalse()))
+                .fetchOne());
+    }
+
+    @Override
+    public Optional<Item> findByIdAndDeletedIsTrue(UUID id) {
+        return Optional.ofNullable(queryFactory.select(QItem.item)
+                .from(QItem.item)
+                .where(QItem.item.id.eq(id).and(QItem.item.deleted.isTrue()))
                 .fetchOne());
     }
 }

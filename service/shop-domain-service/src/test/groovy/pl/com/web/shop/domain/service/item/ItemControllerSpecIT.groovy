@@ -68,4 +68,16 @@ class ItemControllerSpecIT extends ShopRestSpecIT {
             response.statusCode == HttpStatus.NOT_FOUND
             response.body.errors*.code == [ErrorCodes.OBJECT_NOT_FOUND.name()]
     }
+
+    void "should delete an item"() {
+        given:
+            Item item = itemServiceHelper.saveItem()
+        when:
+            ResponseEntity<Void> response = httpDelete("/shop-domain/items/{itemId}", Void, item.id)
+        then:
+            response.statusCode == HttpStatus.NO_CONTENT
+            with(itemServiceHelper.getDeletedItem(item.id)) {
+                it.deleted
+            }
+    }
 }

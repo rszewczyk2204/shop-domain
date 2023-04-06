@@ -9,4 +9,6 @@ import java.util.UUID;
 public interface ItemRepositoryCustom {
 
     Optional<Item> findByIdAndDeletedIsFalse(@NotNull UUID id);
+
+    Optional<Item> findByIdAndDeletedIsTrue(@NotNull UUID id);
 }
