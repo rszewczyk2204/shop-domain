@@ -44,4 +44,12 @@ public class ItemController implements ItemsApi {
         log.debug(String.format("Got an item with given id, %s", details.getId()));
         return ResponseEntity.ok(details);
     }
+
+    @Override
+    public ResponseEntity<Void> deleteItem(UUID itemId) {
+        log.info("Deleting an item");
+        service.deleteItem(itemId);
+        log.debug("Deleted an item");
+        return ResponseEntity.noContent().build();
+    }
 }

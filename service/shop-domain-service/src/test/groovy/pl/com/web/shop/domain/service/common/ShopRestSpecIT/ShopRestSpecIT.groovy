@@ -32,6 +32,10 @@ class ShopRestSpecIT extends Specification {
         restTemplate.exchange(url, HttpMethod.GET, new HttpEntity<Void>(null, headers), responseType, urlVariables)
     }
 
+    def <T> ResponseEntity<T> httpDelete(String url, Class<T> responseType, HttpHeaders headers = defaultHeaders(), Object... urlVariables) {
+        restTemplate.exchange(url, HttpMethod.DELETE, new HttpEntity<Void>(null, headers), responseType, urlVariables)
+    }
+
     private static HttpHeaders defaultHeaders() {
         HttpHeaders header = new HttpHeaders()
         header.setAccept([MediaType.APPLICATION_JSON])

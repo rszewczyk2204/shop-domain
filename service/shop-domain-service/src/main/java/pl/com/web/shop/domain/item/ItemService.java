@@ -40,4 +40,9 @@ public class ItemService {
         Item item = itemRepository.get(id);
         return itemMapper.itemDetails(item);
     }
+
+    @Transactional
+    public void deleteItem(@NotNull UUID id) {
+        itemRepository.softDeleteById(id);
+    }
 }
