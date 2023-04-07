@@ -1,11 +1,13 @@
 package pl.com.web.shop.domain.item;
 
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.validation.annotation.Validated;
 import pl.com.web.shop.domain.item.model.dto.ItemCreateRequestDto;
 import pl.com.web.shop.domain.item.model.dto.ItemUpdateRequestDto;
+import pl.com.web.shop.domain.item.model.outside.ItemsSearchFilter;
 import pl.com.web.shop.domain.item.repository.ItemRepository;
 import pl.com.web.shop.domain.item.model.entity.Item;
 import pl.com.web.shop.domain.item.model.outside.ItemDetails;
@@ -44,5 +46,11 @@ public class ItemService {
     @Transactional
     public void deleteItem(@NotNull UUID id) {
         itemRepository.softDeleteById(id);
+    }
+
+    @Transactional(readOnly = true)
+    public Page<ItemDetails> findItems(@NotNull ItemsSearchFilter filter) {
+        Page<Item> items = itemRepository.find(filter);
+        return itemMapper.toPageItemDetails(items);
     }
 }

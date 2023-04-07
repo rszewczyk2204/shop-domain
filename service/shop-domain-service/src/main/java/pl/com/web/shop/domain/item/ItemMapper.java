@@ -3,6 +3,7 @@ package pl.com.web.shop.domain.item;
 import org.mapstruct.Builder;
 import org.mapstruct.Mapper;
 import org.mapstruct.ReportingPolicy;
+import org.springframework.data.domain.Page;
 import pl.com.web.shop.domain.item.model.dto.ItemCreateRequestDto;
 import pl.com.web.shop.domain.item.model.dto.ItemUpdateRequestDto;
 import pl.com.web.shop.domain.item.model.outside.ItemCreateRequest;
@@ -20,4 +21,8 @@ public interface ItemMapper {
     ItemDetails itemDetails(Item item);
 
     ItemUpdateRequestDto updateRequestDto(ItemUpdateRequest updateRequest);
+
+    default Page<ItemDetails> toPageItemDetails(Page<Item> itemPage) {
+        return itemPage.map(this::itemDetails);
+    }
 }
