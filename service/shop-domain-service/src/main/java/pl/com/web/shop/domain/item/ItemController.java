@@ -20,6 +20,7 @@ public class ItemController implements ItemsApi {
     private final ItemService service;
     private final ItemMapper itemMapper;
 
+    @Override
     public ResponseEntity<ItemDetails> createItem(ItemCreateRequest request) {
         log.info("Creating an item");
         var dto = itemMapper.createRequestDto(request);

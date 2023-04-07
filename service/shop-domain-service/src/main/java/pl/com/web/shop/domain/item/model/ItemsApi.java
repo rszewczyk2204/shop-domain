@@ -116,14 +116,14 @@ public interface ItemsApi {
     ResponseEntity<ItemDetails> getItem(@ApiParam(value = "Identyfikator obiektu", required = true) @PathVariable("itemId") UUID itemId);
 
     @ApiOperation(
-            value = "Get item.",
-            nickname = "getItem",
+            value = "Delete item.",
+            nickname = "deleteItem",
             response = ItemDetails.class,
             authorizations = {@Authorization("bearerAuth")},
             tags = {"items"}
     )
     @ApiResponses({@ApiResponse(
-            code = 200,
+            code = 204,
             message = "OK",
             response = ItemDetails.class
     ), @ApiResponse(
