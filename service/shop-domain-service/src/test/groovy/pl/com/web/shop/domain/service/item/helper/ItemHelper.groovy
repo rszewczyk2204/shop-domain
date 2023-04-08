@@ -31,4 +31,11 @@ class ItemHelper {
         assert entity.deleted == details.deleted
         true
     }
+
+    static boolean compareLists(List<Item> items, List<ItemDetails> itemDetails) {
+        assert items.size() == itemDetails.size()
+        [items.sort { it.id }, itemDetails.sort { it.id }].transpose().every {
+            a, b -> compare((Item) a, (ItemDetails) b)
+        }
+    }
 }

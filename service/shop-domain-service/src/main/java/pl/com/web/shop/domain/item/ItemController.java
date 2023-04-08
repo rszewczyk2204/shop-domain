@@ -2,6 +2,7 @@ package pl.com.web.shop.domain.item;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.data.domain.Page;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.RestController;
@@ -9,6 +10,7 @@ import pl.com.web.shop.domain.item.model.ItemsApi;
 import pl.com.web.shop.domain.item.model.outside.ItemCreateRequest;
 import pl.com.web.shop.domain.item.model.outside.ItemDetails;
 import pl.com.web.shop.domain.item.model.outside.ItemUpdateRequest;
+import pl.com.web.shop.domain.item.model.outside.ItemsSearchFilter;
 
 import java.util.UUID;
 
@@ -52,5 +54,13 @@ public class ItemController implements ItemsApi {
         service.deleteItem(itemId);
         log.debug("Deleted an item");
         return ResponseEntity.noContent().build();
+    }
+
+    @Override
+    public ResponseEntity<Page<ItemDetails>> getItemDetailsPage(ItemsSearchFilter itemsSearchFilter) {
+        log.info("Searching for items");
+        Page<ItemDetails> itemDetails = service.findItems(itemsSearchFilter);
+        log.debug("Found items: {}", itemDetails.getSize());
+        return ResponseEntity.ok(itemDetails);
     }
 }
