@@ -9,6 +9,7 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.querydsl.QuerydslPredicateExecutor;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
+import pl.com.web.shop.domain.common.BaseRepository;
 import pl.com.web.shop.domain.common.PageUtils;
 import pl.com.web.shop.domain.exception.ObjectNotFoundException;
 import pl.com.web.shop.domain.item.model.entity.Item;
@@ -18,7 +19,7 @@ import javax.validation.constraints.NotNull;
 import java.util.UUID;
 
 @Repository
-public interface ItemRepository extends JpaRepository<Item, UUID>, QuerydslPredicateExecutor<Item>, ItemRepositoryCustom {
+public interface ItemRepository extends BaseRepository, JpaRepository<Item, UUID>, QuerydslPredicateExecutor<Item>, ItemRepositoryCustom {
 
     @Transactional(readOnly = true)
     default Item get(@NotNull UUID id) {

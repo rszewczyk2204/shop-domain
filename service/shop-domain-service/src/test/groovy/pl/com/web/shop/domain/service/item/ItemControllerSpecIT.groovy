@@ -60,6 +60,18 @@ class ItemControllerSpecIT extends ShopRestSpecIT {
             }
     }
 
+    void "should throw an exception when item's version differs from update's version"() {
+        given:
+            Item item = itemServiceHelper.saveItem()
+        and:
+            ItemUpdateRequest request = ItemApiHelper.itemUpdateRequest(name: "test1", version: 10, id: item.id)
+        when:
+            ResponseEntity<Problem> response = httpPut(ID_URL, request, Problem, item.id)
+        then:
+            response.statusCode == HttpStatus.CONFLICT
+            response.body.errors*.code == [ErrorCodes.VERSION_MISMATCH.name()]
+    }
+
     void "should get an item"() {
         given:
             Item item = itemServiceHelper.saveItem()
