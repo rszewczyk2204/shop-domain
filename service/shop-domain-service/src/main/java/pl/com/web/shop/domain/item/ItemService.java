@@ -32,6 +32,7 @@ public class ItemService {
     @Transactional
     public ItemDetails updateItem(@NotNull UUID id, @NotNull @Valid ItemUpdateRequestDto requestDto) {
         Item item = itemRepository.get(id);
+        itemRepository.checkVersion(item.getVersion(), requestDto.getVersion());
         item.update(requestDto);
         Item savedItem = itemRepository.saveAndFlush(item);
         return itemMapper.itemDetails(itemRepository.get(savedItem.getId()));
