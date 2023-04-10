@@ -25,3 +25,5 @@
 /service/shop-domain-common/target/maven-status/maven-compiler-plugin/compile/java-compile/inputFiles.lst
 /service/shop-domain-common/target/
 /service/shop-domain-common/target/classes/
+/service/shop-domain-common/ibtm-domain-common.iml
+/service/shop-domain-service/ibtm-domain-service.iml

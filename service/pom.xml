@@ -5,7 +5,7 @@
     <parent>
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-starter-parent</artifactId>
-        <version>2.3.4.RELEASE</version>
+        <version>2.4.3</version>
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
 
@@ -28,7 +28,7 @@
         <pmd-ruleset>${main.basedir}/pmd.xml</pmd-ruleset>
 
         <spring-boot.version>2.3.4.RELEASE</spring-boot.version>
-        <spring-cloud.version>Hoxton.SR10</spring-cloud.version>
+        <spring-cloud.version>2020.0.0</spring-cloud.version>
 
         <postgresql.version>42.3.1</postgresql.version>
         <hibernate.version>5.4.28.Final</hibernate.version>
@@ -388,12 +388,6 @@
                 <scope>import</scope>
             </dependency>
 
-            <dependency>
-                <groupId>org.springframework.cloud</groupId>
-                <artifactId>spring-cloud-starter-openfeign</artifactId>
-                <version>2.2.7.RELEASE</version>
-            </dependency>
-
 <!--            <dependency>-->
 <!--                <groupId>org.junit</groupId>-->
 <!--                <artifactId>junit-bom</artifactId>-->
@@ -510,6 +504,12 @@
                 <groupId>org.apache.tika</groupId>
                 <artifactId>tika-parsers-standard-package</artifactId>
                 <version>${apache.tika.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>pl.com.web.shop.domain</groupId>
+                <artifactId>shop-domain-service</artifactId>
+                <version>${project.version}</version>
             </dependency>
         </dependencies>
     </dependencyManagement>
