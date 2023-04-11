@@ -25,7 +25,7 @@ jobs:
       run: mvn -B package --file service/pom.xml
   deploy:
     runs-on: ubuntu-latest
-    if: ${{ github.refs == 'refs/heads/develop' }}
+    if: ${{ github.ref == 'refs/heads/develop' }}
     steps:
     - uses: actions/checkout@v3
     - name: Set up JDK 11
