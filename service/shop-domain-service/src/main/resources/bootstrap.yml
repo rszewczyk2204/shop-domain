@@ -1,10 +1,10 @@
 spring:
   cloud:
     config:
-      fail-fast: true
       name: shop-domain-service
       username: root
       password: password
+      uri: http://shop-server:8888
   profiles:
     active: dev
   application.name: shop-domain-service

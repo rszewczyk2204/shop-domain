@@ -1,0 +1,12 @@
+version: "3.9"
+services:
+  shop-domain:
+    container_name: shop-domain
+    image: bananawhite98/shop-domain:97fb32e84c55bd5b0c8ccf567103188485b3749b
+    ports:
+      - "8880:8880"
+    networks:
+      - shop-eureka_spring-cloud-network
+networks:
+  shop-eureka_spring-cloud-network:
+    external: true
