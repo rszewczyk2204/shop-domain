@@ -12,6 +12,7 @@ import pl.com.web.shop.domain.item.model.outside.ItemCreateRequest
 import pl.com.web.shop.domain.item.model.outside.ItemDetails
 import pl.com.web.shop.domain.item.model.outside.ItemUpdateRequest
 import pl.com.web.shop.domain.item.model.outside.ItemsSearchFilter
+import pl.com.web.shop.domain.item.model.outside.LinkItemRequest
 import pl.com.web.shop.domain.item.repository.ItemRepository
 import pl.com.web.shop.domain.service.common.ShopRestSpecIT.ShopRestSpecIT
 import pl.com.web.shop.domain.service.item.helper.ItemApiHelper
@@ -23,6 +24,7 @@ class ItemControllerSpecIT extends ShopRestSpecIT {
     static final String BASE_URL = "/shop-domain/items"
     static final String ID_URL = "${BASE_URL}/{itemId}"
     static final String SEARCH_URL = "${BASE_URL}/search"
+    static final String LINK_URL = "${ID_URL}/link"
 
     @Autowired
     ItemRepository itemRepository
@@ -154,5 +156,24 @@ class ItemControllerSpecIT extends ShopRestSpecIT {
         then:
             response.statusCode == HttpStatus.OK
             response.body.content.size() == 0
+    }
+
+    void "should link two items"() {
+        given:
+            Item item1 = itemServiceHelper.saveItem()
+            Item item2 = itemServiceHelper.saveItem()
+        and:
+            def request = LinkItemRequest.builder()
+                .id(item2.id)
+                .version(item1.version)
+                .build()
+        when:
+            ResponseEntity<ItemDetails> response = httpPost(LINK_URL, request, ItemDetails, item1.id)
+        then:
+            response.statusCode == HttpStatus.OK
+            with(itemRepository.get(item1.id)) {
+                ItemHelper.compare(it, response.body)
+                ItemHelper.compare(it, request)
+            }
     }
 }

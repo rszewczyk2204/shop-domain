@@ -15,6 +15,7 @@ import pl.com.web.shop.domain.exception.ObjectNotFoundException;
 import pl.com.web.shop.domain.item.model.entity.Item;
 import pl.com.web.shop.domain.item.model.outside.ItemsSearchFilter;
 
+import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import java.util.UUID;
 
@@ -23,7 +24,12 @@ public interface ItemRepository extends BaseRepository, JpaRepository<Item, UUID
 
     @Transactional(readOnly = true)
     default Item get(@NotNull UUID id) {
-        return findByIdAndDeletedIsFalse(id).orElseThrow(() -> new ObjectNotFoundException("Object with given identifier not found"));
+        return get(id, Item.ITEM_ENTITY_DETAILS);
+    }
+
+    @Transactional(readOnly = true)
+    default Item get(@NotNull UUID id, @NotBlank String graphName) {
+        return findByIdAndDeletedIsFalse(id, graphName).orElseThrow(() -> new ObjectNotFoundException("Object with given identifier not found"));
     }
 
     @Transactional(readOnly = true)

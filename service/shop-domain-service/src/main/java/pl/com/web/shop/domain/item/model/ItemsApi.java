@@ -16,6 +16,7 @@ import pl.com.web.shop.domain.item.model.outside.ItemDetails;
 import pl.com.web.shop.domain.item.model.outside.ItemCreateRequest;
 import pl.com.web.shop.domain.item.model.outside.ItemUpdateRequest;
 import pl.com.web.shop.domain.item.model.outside.ItemsSearchFilter;
+import pl.com.web.shop.domain.item.model.outside.LinkItemRequest;
 
 import java.util.UUID;
 
@@ -178,4 +179,35 @@ public interface ItemsApi {
             method = {RequestMethod.POST}
     )
     ResponseEntity<Page<ItemDetails>> getItemDetailsPage(@ApiParam(value = "", required = true) @RequestBody ItemsSearchFilter itemsSearchFilter);
+
+    @ApiOperation(
+            value = "Link an item.",
+            nickname = "linkItem",
+            response = ItemDetails.class,
+            authorizations = {@Authorization("bearerAuth")},
+            tags = {"items"}
+    )
+    @ApiResponses({@ApiResponse(
+            code = 204,
+            message = "OK",
+            response = ItemDetails.class
+    ), @ApiResponse(
+            code = 400,
+            message = "Bad request - the request cannot be handled by the server due to an irregularity perceived as a user's error (e.g. incorrect query syntax).",
+            response = Object.class
+    ), @ApiResponse(
+            code = 403,
+            message = "Forbidden - access denied",
+            response = Object.class
+    ), @ApiResponse(
+            code = 404,
+            message = "Not found",
+            response = Object.class
+    )})
+    @RequestMapping(
+            value = {"/shop-domain/items/{itemId}/link"},
+            produces = {"application/json"},
+            method = {RequestMethod.POST}
+    )
+    ResponseEntity<ItemDetails> linkItem(@ApiParam(value = "Identyfikator obiektu", required = true) @PathVariable("itemId") UUID itemId, @ApiParam(value = "", required = true) @RequestBody LinkItemRequest linkItemRequest);
 }

@@ -2,6 +2,7 @@ package pl.com.web.shop.domain.item.repository;
 
 import com.querydsl.core.types.Predicate;
 import com.querydsl.jpa.impl.JPAQueryFactory;
+import org.hibernate.graph.GraphSemantic;
 import org.springframework.data.jpa.repository.support.QuerydslRepositorySupport;
 import org.springframework.stereotype.Repository;
 import pl.com.web.shop.domain.common.Predicates;
@@ -10,6 +11,8 @@ import pl.com.web.shop.domain.item.model.entity.Item;
 import pl.com.web.shop.domain.item.model.outside.ItemsSearchFilter;
 
 import javax.persistence.EntityManager;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 import java.util.Optional;
 import java.util.UUID;
 
@@ -26,10 +29,12 @@ public class ItemRepositoryCustomImpl extends QuerydslRepositorySupport implemen
 
 
     @Override
-    public Optional<Item> findByIdAndDeletedIsFalse(UUID id) {
+    public Optional<Item> findByIdAndDeletedIsFalse(@NotNull UUID id, @NotBlank String graphName) {
         return Optional.ofNullable(queryFactory.select(QItem.item)
                 .from(QItem.item)
-                .where(QItem.item.id.eq(id).and(QItem.item.deleted.isFalse()))
+                .where(QItem.item.id.eq(id).
+                        and(QItem.item.deleted.isFalse()))
+                .setHint(GraphSemantic.FETCH.getJpaHintName(), entityManager.getEntityGraph(graphName))
                 .fetchOne());
     }
 

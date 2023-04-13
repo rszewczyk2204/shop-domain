@@ -11,6 +11,7 @@ import pl.com.web.shop.domain.item.model.outside.ItemCreateRequest;
 import pl.com.web.shop.domain.item.model.outside.ItemDetails;
 import pl.com.web.shop.domain.item.model.outside.ItemUpdateRequest;
 import pl.com.web.shop.domain.item.model.outside.ItemsSearchFilter;
+import pl.com.web.shop.domain.item.model.outside.LinkItemRequest;
 
 import java.util.UUID;
 
@@ -61,6 +62,15 @@ public class ItemController implements ItemsApi {
         log.info("Searching for items");
         Page<ItemDetails> itemDetails = service.findItems(itemsSearchFilter);
         log.debug("Found items: {}", itemDetails.getSize());
+        return ResponseEntity.ok(itemDetails);
+    }
+
+    @Override
+    public ResponseEntity<ItemDetails> linkItem(UUID itemId, LinkItemRequest linkItemRequest) {
+        log.info("Linking an item of id: {}, with an item of id: {}", itemId, linkItemRequest.getId());
+        var dto = itemMapper.linkItemRequestDto(linkItemRequest);
+        ItemDetails itemDetails = service.linkItem(itemId, dto);
+        log.debug("Linking an item of id: {}, with an item of id: {}", itemId, linkItemRequest.getId());
         return ResponseEntity.ok(itemDetails);
     }
 }
