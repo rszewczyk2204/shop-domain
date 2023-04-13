@@ -21,7 +21,7 @@ import pl.com.web.shop.domain.service.item.helper.ItemServiceHelper
 class ItemControllerSpecIT extends ShopRestSpecIT {
 
     static final String BASE_URL = "/shop-domain/items"
-    static final String ID_URL = "${BASE_URL}/{id}"
+    static final String ID_URL = "${BASE_URL}/{itemId}"
     static final String SEARCH_URL = "${BASE_URL}/search"
 
     @Autowired
@@ -36,7 +36,7 @@ class ItemControllerSpecIT extends ShopRestSpecIT {
 
     void "should create item"() {
         given:
-            ItemCreateRequest request = ItemApiHelper.itemCreateRequest(name: "test")
+            ItemCreateRequest request = ItemApiHelper.itemCreateRequest(name: "test", available: true, price: 1000.00)
         when:
             ResponseEntity<ItemDetails> response = httpPost(BASE_URL, request, ItemDetails)
         then:
@@ -50,7 +50,7 @@ class ItemControllerSpecIT extends ShopRestSpecIT {
         given:
             Item item = itemServiceHelper.saveItem()
         and:
-            ItemUpdateRequest request = ItemApiHelper.itemUpdateRequest(name: "test1", version: item.version, id: item.id)
+            ItemUpdateRequest request = ItemApiHelper.itemUpdateRequest(name: "test1", version: item.version, id: item.id, available: false, price: 50)
         when:
             ResponseEntity<ItemDetails> response = httpPut(ID_URL, request, ItemDetails, item.id)
         then:
@@ -64,7 +64,7 @@ class ItemControllerSpecIT extends ShopRestSpecIT {
         given:
             Item item = itemServiceHelper.saveItem()
         and:
-            ItemUpdateRequest request = ItemApiHelper.itemUpdateRequest(name: "test1", version: 10, id: item.id)
+            ItemUpdateRequest request = ItemApiHelper.itemUpdateRequest(name: "test1", version: 10, id: item.id, price: 1000, available: true)
         when:
             ResponseEntity<Problem> response = httpPut(ID_URL, request, Problem, item.id)
         then:

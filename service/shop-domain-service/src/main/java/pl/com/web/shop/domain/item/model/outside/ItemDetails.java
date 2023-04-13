@@ -27,4 +27,13 @@ public class ItemDetails {
 
     @JsonProperty("deleted")
     private boolean deleted;
+
+    @JsonProperty("available")
+    private boolean available;
+
+    @JsonProperty("price")
+    private double price;
+
+    @JsonProperty("specification")
+    private String specification;
 }

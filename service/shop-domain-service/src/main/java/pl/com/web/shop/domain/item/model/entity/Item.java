@@ -46,6 +46,13 @@ public class Item {
 
     private boolean deleted;
 
+    private boolean available;
+
+    private double price;
+
+    @Nullable
+    private String specification;
+
     public static Item of(@NotNull ItemCreateRequestDto requestDto) {
         return Item.builder()
                 .name(requestDto.getName())
