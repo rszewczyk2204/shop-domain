@@ -2,6 +2,7 @@ package pl.com.web.shop.domain.service.item.helper
 
 import pl.com.web.shop.domain.item.model.entity.Item
 import pl.com.web.shop.domain.item.model.outside.ItemDetails
+import pl.com.web.shop.domain.item.model.outside.LinkItemRequest
 
 class ItemHelper {
     private static Map defaultItemEntityArgs() {
@@ -35,6 +36,11 @@ class ItemHelper {
         assert entity.available == details.available
         assert entity.price == details.price
         assert entity.specification == details.specification
+        true
+    }
+
+    static boolean compare(Item entity, LinkItemRequest request) {
+        assert entity.linkedItems*.id.contains(request.id)
         true
     }
 

@@ -6,10 +6,12 @@ import org.mapstruct.ReportingPolicy;
 import org.springframework.data.domain.Page;
 import pl.com.web.shop.domain.item.model.dto.ItemCreateRequestDto;
 import pl.com.web.shop.domain.item.model.dto.ItemUpdateRequestDto;
+import pl.com.web.shop.domain.item.model.dto.LinkItemRequestDto;
 import pl.com.web.shop.domain.item.model.outside.ItemCreateRequest;
 import pl.com.web.shop.domain.item.model.outside.ItemDetails;
 import pl.com.web.shop.domain.item.model.entity.Item;
 import pl.com.web.shop.domain.item.model.outside.ItemUpdateRequest;
+import pl.com.web.shop.domain.item.model.outside.LinkItemRequest;
 
 @Mapper(componentModel = "spring",
     unmappedTargetPolicy = ReportingPolicy.ERROR,
@@ -25,4 +27,6 @@ public interface ItemMapper {
     default Page<ItemDetails> toPageItemDetails(Page<Item> itemPage) {
         return itemPage.map(this::itemDetails);
     }
+
+    LinkItemRequestDto linkItemRequestDto(LinkItemRequest request);
 }

@@ -7,6 +7,7 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.validation.annotation.Validated;
 import pl.com.web.shop.domain.item.model.dto.ItemCreateRequestDto;
 import pl.com.web.shop.domain.item.model.dto.ItemUpdateRequestDto;
+import pl.com.web.shop.domain.item.model.dto.LinkItemRequestDto;
 import pl.com.web.shop.domain.item.model.outside.ItemsSearchFilter;
 import pl.com.web.shop.domain.item.repository.ItemRepository;
 import pl.com.web.shop.domain.item.model.entity.Item;
@@ -53,5 +54,14 @@ public class ItemService {
     public Page<ItemDetails> findItems(@NotNull ItemsSearchFilter filter) {
         Page<Item> items = itemRepository.find(filter);
         return itemMapper.toPageItemDetails(items);
+    }
+
+    @Transactional
+    public ItemDetails linkItem(@NotNull UUID itemId, @NotNull @Valid LinkItemRequestDto requestDto) {
+        Item item = itemRepository.get(itemId);
+        itemRepository.checkVersion(item.getVersion(), requestDto.getVersion());
+        item.linkItem(itemRepository.get(requestDto.getId()));
+        Item savedItem = itemRepository.saveAndFlush(item);
+        return itemMapper.itemDetails(savedItem);
     }
 }
