@@ -6,6 +6,7 @@ import lombok.NoArgsConstructor;
 
 import javax.annotation.Nullable;
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 
 @Data
 @NoArgsConstructor
@@ -17,4 +18,13 @@ public class ItemCreateRequestDto {
 
     @Nullable
     private String description;
+
+    @NotNull
+    private Boolean available;
+
+    @NotNull
+    private Double price;
+
+    @Nullable
+    private String specification;
 }

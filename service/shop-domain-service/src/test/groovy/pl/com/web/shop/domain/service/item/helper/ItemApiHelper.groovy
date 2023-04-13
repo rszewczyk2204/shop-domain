@@ -11,6 +11,9 @@ class ItemApiHelper {
         ItemCreateRequest.builder()
             .name(customArgs.get("name") as String)
             .description(customArgs.get("description") as String)
+            .available(customArgs.get("available") as Boolean)
+            .price(customArgs.get("price") as Double)
+            .specification(customArgs.get("specification") as String)
             .build()
     }
 
@@ -20,6 +23,9 @@ class ItemApiHelper {
             .version(customArgs.get("version") as Integer)
             .name(customArgs.get("name") as String)
             .description(customArgs.get("description") as String)
+            .available(customArgs.get("available") as Boolean)
+            .price(customArgs.get("price") as Double)
+            .specification(customArgs.get("specification") as String)
             .build()
     }
 }
