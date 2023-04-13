@@ -41,6 +41,3 @@ eureka:
     fetch-registry: true
   instance:
     lease-renewal-interval-in-seconds: 10
-logging:
-  level:
-    web: debug
