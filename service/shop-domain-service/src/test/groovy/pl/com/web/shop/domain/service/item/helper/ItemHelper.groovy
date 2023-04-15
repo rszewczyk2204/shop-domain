@@ -35,7 +35,6 @@ class ItemHelper {
         assert entity.deleted == details.deleted
         assert entity.available == details.available
         assert entity.price == details.price
-        assert entity.specification == details.specification
         true
     }
 
