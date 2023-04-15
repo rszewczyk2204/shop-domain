@@ -9,6 +9,7 @@ import lombok.ToString;
 @AllArgsConstructor
 public enum ErrorCodes {
     OBJECT_NOT_FOUND("OBJECT_NOT_FOUND"),
-    VERSION_MISMATCH("VERSION_MISMATCH");
-    private String value;
+    VERSION_MISMATCH("VERSION_MISMATCH"),
+    INTERNAL_COMMUNICATION_EXCEPTION("INTERNAL_COMMUNICATION_EXCEPTION");
+    private final String value;
 }
