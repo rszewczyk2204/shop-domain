@@ -1,0 +1,13 @@
+ALTER TABLE item
+    ADD COLUMN created TIMESTAMP WITH TIME ZONE NOT NULL
+        DEFAULT localtimestamp;
+
+ALTER TABLE item
+    ADD COLUMN modified TIMESTAMP WITH TIME ZONE;
+
+ALTER TABLE specification
+    ADD COLUMN created TIMESTAMP WITH TIME ZONE NOT NULL
+        DEFAULT localtimestamp;
+
+ALTER TABLE specification
+    ADD COLUMN modified TIMESTAMP WITH TIME ZONE;
