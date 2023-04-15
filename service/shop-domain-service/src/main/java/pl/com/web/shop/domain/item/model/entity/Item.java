@@ -10,6 +10,7 @@ import lombok.experimental.SuperBuilder;
 import pl.com.web.shop.domain.common.VersionedEntity;
 import pl.com.web.shop.domain.item.model.dto.ItemCreateRequestDto;
 import pl.com.web.shop.domain.item.model.dto.ItemUpdateRequestDto;
+import pl.com.web.shop.domain.specification.model.entity.Specification;
 
 import javax.annotation.Nullable;
 import javax.persistence.CascadeType;
@@ -21,6 +22,7 @@ import javax.persistence.ManyToMany;
 import javax.persistence.NamedAttributeNode;
 import javax.persistence.NamedEntityGraph;
 import javax.persistence.NamedEntityGraphs;
+import javax.persistence.OneToMany;
 import javax.validation.Valid;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
@@ -37,7 +39,8 @@ import java.util.Set;
         @NamedEntityGraph(
                 name = Item.ITEM_ENTITY_DETAILS,
                 attributeNodes = {
-                        @NamedAttributeNode("linkedItems")
+                        @NamedAttributeNode("linkedItems"),
+                        @NamedAttributeNode("specifications")
                 }
         )
 })
@@ -68,6 +71,12 @@ public class Item extends VersionedEntity {
         inverseJoinColumns = @JoinColumn(name = "item_id"))
     private Set<Item> linkedItems = new HashSet<>();
 
+    @ToString.Exclude
+    @EqualsAndHashCode.Exclude
+    @Builder.Default
+    @OneToMany(mappedBy = "item", cascade = CascadeType.ALL, orphanRemoval = true)
+    private Set<Specification> specifications = new HashSet<>();
+
 
     public static Item of(@NotNull ItemCreateRequestDto requestDto) {
         return Item.builder()
@@ -81,6 +90,8 @@ public class Item extends VersionedEntity {
     public void update(@NotNull @Valid ItemUpdateRequestDto requestDto) {
         setName(requestDto.getName());
         setDescription(requestDto.getDescription());
+        setAvailable(requestDto.getAvailable());
+        setPrice(requestDto.getPrice());
     }
 
     public void linkItem(Item itemToLink) {

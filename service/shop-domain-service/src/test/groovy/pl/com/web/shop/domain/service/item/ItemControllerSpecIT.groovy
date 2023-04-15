@@ -44,6 +44,7 @@ class ItemControllerSpecIT extends ShopRestSpecIT {
         then:
             response.statusCode == HttpStatus.OK
             with(itemServiceHelper.getItem(response.body.id)) {
+                ItemHelper.compare(it, request)
                 ItemHelper.compare(it, response.body)
             }
     }
@@ -58,6 +59,7 @@ class ItemControllerSpecIT extends ShopRestSpecIT {
         then:
             response.statusCode == HttpStatus.OK
             with(itemServiceHelper.getItem(response.body.id)) {
+                ItemHelper.compare(it, request)
                 ItemHelper.compare(it, response.body)
             }
     }

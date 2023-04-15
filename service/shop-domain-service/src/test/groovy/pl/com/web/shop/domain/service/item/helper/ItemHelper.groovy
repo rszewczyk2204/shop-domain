@@ -1,7 +1,9 @@
 package pl.com.web.shop.domain.service.item.helper
 
 import pl.com.web.shop.domain.item.model.entity.Item
+import pl.com.web.shop.domain.item.model.outside.ItemCreateRequest
 import pl.com.web.shop.domain.item.model.outside.ItemDetails
+import pl.com.web.shop.domain.item.model.outside.ItemUpdateRequest
 import pl.com.web.shop.domain.item.model.outside.LinkItemRequest
 
 class ItemHelper {
@@ -26,6 +28,24 @@ class ItemHelper {
         item
     }
 
+    static boolean compare(Item entity, ItemCreateRequest request) {
+        assert entity.id
+        assert entity.name == request.name
+        assert entity.description == request.description
+        assert entity.available == entity.available
+        assert entity.price == entity.price
+        true
+    }
+
+    static boolean compare(Item entity, ItemUpdateRequest request) {
+        assert entity.version == request.version + 1
+        assert entity.name == request.name
+        assert entity.description == request.description
+        assert entity.available == request.available
+        assert entity.price == request.price
+        true
+    }
+
     static boolean compare(Item entity, ItemDetails details) {
         assert details.id
         assert entity.name == details.name
@@ -35,6 +55,7 @@ class ItemHelper {
         assert entity.deleted == details.deleted
         assert entity.available == details.available
         assert entity.price == details.price
+        assert entity.quantity == details.quantity
         true
     }
 

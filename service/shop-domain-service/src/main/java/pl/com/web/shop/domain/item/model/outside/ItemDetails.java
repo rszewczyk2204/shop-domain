@@ -3,6 +3,7 @@ package pl.com.web.shop.domain.item.model.outside;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import io.swagger.annotations.ApiModel;
 import lombok.Data;
+import pl.com.web.shop.domain.specification.model.outside.SpecificationDetails;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -38,4 +39,7 @@ public class ItemDetails {
 
     @JsonProperty("linkedItems")
     private List<ItemLite> linkedItems = new ArrayList<>();
+
+    @JsonProperty("specification")
+    private List<SpecificationDetails> specifications = new ArrayList<>();
 }
