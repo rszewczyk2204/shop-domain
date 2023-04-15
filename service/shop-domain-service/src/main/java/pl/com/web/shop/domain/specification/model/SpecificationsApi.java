@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import pl.com.web.shop.domain.specification.model.outside.SpecificationCreateRequest;
 import pl.com.web.shop.domain.specification.model.outside.SpecificationDetails;
+import pl.com.web.shop.domain.specification.model.outside.SpecificationUpdateRequest;
 
 import java.util.UUID;
 
@@ -20,11 +21,11 @@ import java.util.UUID;
 public interface SpecificationsApi {
 
     @ApiOperation(
-            value = "Create item.",
-            nickname = "createItem",
+            value = "Create specification.",
+            nickname = "createSpecification",
             response = SpecificationDetails.class,
             authorizations = {@Authorization("bearerAuth")},
-            tags = {"items"}
+            tags = {"specifications"}
     )
     @ApiResponses({@ApiResponse(
             code = 200,
@@ -49,5 +50,37 @@ public interface SpecificationsApi {
             consumes = {"application/json"},
             method = {RequestMethod.POST}
     )
-    ResponseEntity<SpecificationDetails> createItem(@ApiParam(value = "Identyfikator obiektu", required = true) @PathVariable("itemId") UUID itemId, @ApiParam(value = "",required = true) @RequestBody SpecificationCreateRequest specificationCreateRequest);
+    ResponseEntity<SpecificationDetails> createSpecification(@ApiParam(value = "Identyfikator obiektu", required = true) @PathVariable("itemId") UUID itemId, @ApiParam(value = "",required = true) @RequestBody SpecificationCreateRequest specificationCreateRequest);
+
+    @ApiOperation(
+            value = "Update specification.",
+            nickname = "updateSpecification",
+            response = SpecificationDetails.class,
+            authorizations = {@Authorization("bearerAuth")},
+            tags = {"specifications"}
+    )
+    @ApiResponses({@ApiResponse(
+            code = 200,
+            message = "OK",
+            response = SpecificationDetails.class
+    ), @ApiResponse(
+            code = 400,
+            message = "Bad request - the request cannot be handled by the server due to an irregularity perceived as a user's error (e.g. incorrect query syntax).",
+            response = Object.class
+    ), @ApiResponse(
+            code = 403,
+            message = "Forbidden - access denied",
+            response = Object.class
+    ), @ApiResponse(
+            code = 404,
+            message = "Not found",
+            response = Object.class
+    )})
+    @RequestMapping(
+            value = {"/shop-domain/items/{itemId}/specifications/{specificationId}"},
+            produces = {"application/json"},
+            consumes = {"application/json"},
+            method = {RequestMethod.PUT}
+    )
+    ResponseEntity<SpecificationDetails> updateSpecification(@ApiParam(value = "Identyfikator obiektu", required = true) @PathVariable("itemId") UUID itemId, @ApiParam(value = "Identyfikator specyfikacji", required = true) @PathVariable("specificationId") UUID specificationId, @ApiParam(value = "",required = true) @RequestBody SpecificationUpdateRequest updateRequest);
 }

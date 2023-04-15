@@ -28,8 +28,4 @@ class ItemServiceHelper {
     Item getDeletedItem(UUID id) {
         itemRepository.getDeletedItem(id)
     }
-
-    void cleanup() {
-        itemRepository.deleteAll()
-    }
 }

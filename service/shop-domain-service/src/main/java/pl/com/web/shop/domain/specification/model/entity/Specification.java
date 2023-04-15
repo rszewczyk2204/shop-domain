@@ -9,6 +9,7 @@ import lombok.experimental.SuperBuilder;
 import pl.com.web.shop.domain.common.VersionedEntity;
 import pl.com.web.shop.domain.item.model.entity.Item;
 import pl.com.web.shop.domain.specification.model.dto.SpecificationCreateRequestDto;
+import pl.com.web.shop.domain.specification.model.dto.SpecificationUpdateRequestDto;
 
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -58,5 +59,10 @@ public class Specification extends VersionedEntity {
                 .value(requestDto.getValue())
                 .item(item)
                 .build();
+    }
+
+    public void update(@NotNull @Valid SpecificationUpdateRequestDto requestDto) {
+        setName(requestDto.getName());
+        setValue(requestDto.getValue());
     }
 }
