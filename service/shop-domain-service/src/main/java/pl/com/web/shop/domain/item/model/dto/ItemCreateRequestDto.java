@@ -24,7 +24,4 @@ public class ItemCreateRequestDto {
 
     @NotNull
     private Double price;
-
-    @Nullable
-    private String specification;
 }

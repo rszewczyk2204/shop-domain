@@ -1,4 +1,4 @@
-package pl.com.web.shop.domain.item.model.outside;
+package pl.com.web.shop.domain.specification.model.outside;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import io.swagger.annotations.ApiModelProperty;
@@ -6,25 +6,20 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import lombok.experimental.FieldNameConstants;
 
 @Data
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class ItemCreateRequest {
+@FieldNameConstants(asEnum = true)
+public class SpecificationCreateRequest {
 
     @JsonProperty("name")
     @ApiModelProperty(required = true)
     private String name;
 
-    @JsonProperty("description")
-    private String description;
-
-    @JsonProperty("available")
+    @JsonProperty("value")
     @ApiModelProperty(required = true)
-    private Boolean available;
-
-    @JsonProperty("price")
-    @ApiModelProperty(required = true)
-    private Double price;
+    private String value;
 }

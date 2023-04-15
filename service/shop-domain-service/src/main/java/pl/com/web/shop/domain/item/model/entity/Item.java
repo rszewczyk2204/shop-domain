@@ -8,7 +8,6 @@ import lombok.NoArgsConstructor;
 import lombok.ToString;
 import pl.com.web.shop.domain.item.model.dto.ItemCreateRequestDto;
 import pl.com.web.shop.domain.item.model.dto.ItemUpdateRequestDto;
-import pl.com.web.shop.domain.item.model.dto.LinkItemRequestDto;
 
 import javax.annotation.Nullable;
 import javax.persistence.CascadeType;
@@ -73,9 +72,6 @@ public class Item {
 
     private double price;
 
-    @Nullable
-    private String specification;
-
     @Builder.Default
     @ToString.Exclude
     @ManyToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE}, fetch = FetchType.LAZY)
@@ -88,13 +84,15 @@ public class Item {
     public static Item of(@NotNull ItemCreateRequestDto requestDto) {
         return Item.builder()
                 .name(requestDto.getName())
+                .available(requestDto.getAvailable())
                 .description(requestDto.getDescription())
+                .price(requestDto.getPrice())
                 .build();
     }
 
     public void update(@NotNull @Valid ItemUpdateRequestDto requestDto) {
-        setName(name);
-        setDescription(description);
+        setName(requestDto.getName());
+        setDescription(requestDto.getDescription());
     }
 
     public void linkItem(Item itemToLink) {

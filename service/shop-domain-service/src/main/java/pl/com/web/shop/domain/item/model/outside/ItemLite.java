@@ -22,7 +22,4 @@ public class ItemLite {
 
     @JsonProperty("price")
     private double price;
-
-    @JsonProperty("specification")
-    private String specification;
 }

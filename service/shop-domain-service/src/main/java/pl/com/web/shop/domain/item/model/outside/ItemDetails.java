@@ -36,9 +36,6 @@ public class ItemDetails {
     @JsonProperty("price")
     private double price;
 
-    @JsonProperty("specification")
-    private String specification;
-
     @JsonProperty("linkedItems")
     private List<ItemLite> linkedItems = new ArrayList<>();
 }

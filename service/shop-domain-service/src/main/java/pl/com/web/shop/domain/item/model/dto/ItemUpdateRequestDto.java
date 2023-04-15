@@ -31,7 +31,4 @@ public class ItemUpdateRequestDto {
 
     @NotNull
     private Double price;
-
-    @Nullable
-    private String specification;
 }

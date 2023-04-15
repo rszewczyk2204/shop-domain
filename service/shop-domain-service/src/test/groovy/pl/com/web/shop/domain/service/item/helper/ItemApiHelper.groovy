@@ -13,7 +13,6 @@ class ItemApiHelper {
             .description(customArgs.get("description") as String)
             .available(customArgs.get("available") as Boolean)
             .price(customArgs.get("price") as Double)
-            .specification(customArgs.get("specification") as String)
             .build()
     }
 
@@ -25,7 +24,6 @@ class ItemApiHelper {
             .description(customArgs.get("description") as String)
             .available(customArgs.get("available") as Boolean)
             .price(customArgs.get("price") as Double)
-            .specification(customArgs.get("specification") as String)
             .build()
     }
 }
