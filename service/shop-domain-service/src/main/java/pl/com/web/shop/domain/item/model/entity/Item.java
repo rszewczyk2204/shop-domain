@@ -27,6 +27,7 @@ import javax.validation.Valid;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import java.util.HashSet;
+import java.util.Objects;
 import java.util.Set;
 
 
@@ -78,13 +79,17 @@ public class Item extends VersionedEntity {
     private Set<Specification> specifications = new HashSet<>();
 
 
-    public static Item of(@NotNull ItemCreateRequestDto requestDto) {
-        return Item.builder()
+    public static Item of(@Nullable @Valid Item mainItem, @NotNull @Valid ItemCreateRequestDto requestDto) {
+        Item item = Item.builder()
                 .name(requestDto.getName())
                 .available(requestDto.getAvailable())
                 .description(requestDto.getDescription())
                 .price(requestDto.getPrice())
                 .build();
+        if (Objects.nonNull(mainItem)) {
+            item.getLinkedItems().add(mainItem);
+        }
+        return item;
     }
 
     public void update(@NotNull @Valid ItemUpdateRequestDto requestDto) {
@@ -96,6 +101,5 @@ public class Item extends VersionedEntity {
 
     public void linkItem(Item itemToLink) {
         linkedItems.add(itemToLink);
-        itemToLink.linkedItems.add(this);
     }
 }

@@ -49,6 +49,30 @@ class ItemControllerSpecIT extends ShopRestSpecIT {
             }
     }
 
+    void "should create an item and link it with the main one"() {
+        given:
+            Item item = itemServiceHelper.saveItem()
+            ItemCreateRequest request = ItemApiHelper.itemCreateRequest(name: "test", available: true, price: 1000.00, mainItemId: item.id)
+        when:
+            ResponseEntity<ItemDetails> response = httpPost(BASE_URL, request, ItemDetails)
+        then:
+            response.statusCode == HttpStatus.OK
+            with(itemServiceHelper.getItem(response.body.id)) {
+                ItemHelper.compare(it, request)
+                ItemHelper.compare(it, response.body)
+            }
+    }
+
+    void "should throw an exception on item creation - main item not found"() {
+        given:
+            ItemCreateRequest request = ItemApiHelper.itemCreateRequest(name: "test", available: true, price: 1000.00, mainItemId: UUID.randomUUID())
+        when:
+            ResponseEntity<Problem> response = httpPost(BASE_URL, request, Problem)
+        then:
+            response.statusCode == HttpStatus.NOT_FOUND
+            response.body.errors*.code == [ErrorCodes.OBJECT_NOT_FOUND.name()]
+    }
+
     void "should update an item"() {
         given:
             Item item = itemServiceHelper.saveItem()

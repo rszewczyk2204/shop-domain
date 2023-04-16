@@ -13,6 +13,7 @@ class ItemApiHelper {
             .description(customArgs.get("description") as String)
             .available(customArgs.get("available") as Boolean)
             .price(customArgs.get("price") as Double)
+            .mainItemId(customArgs.get("mainItemId") as UUID)
             .build()
     }
 
