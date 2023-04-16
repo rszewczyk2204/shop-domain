@@ -7,6 +7,8 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.UUID;
+
 @Data
 @Builder
 @NoArgsConstructor
@@ -27,4 +29,7 @@ public class ItemCreateRequest {
     @JsonProperty("price")
     @ApiModelProperty(required = true)
     private Double price;
+
+    @JsonProperty("mainItemId")
+    private UUID mainItemId;
 }

@@ -15,6 +15,7 @@ import pl.com.web.shop.domain.item.model.outside.ItemDetails;
 
 import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
+import java.util.Objects;
 import java.util.UUID;
 
 @Service
@@ -26,8 +27,13 @@ public class ItemService {
 
     @Transactional
     public ItemDetails createItem(@NotNull @Valid ItemCreateRequestDto requestDto) {
-        Item item = Item.of(requestDto);
-        return itemMapper.itemDetails(itemRepository.saveAndFlush(item));
+        Item mainItem = null;
+        if (Objects.nonNull(requestDto.getMainItemId())) {
+            mainItem = itemRepository.get(requestDto.getMainItemId());
+        }
+        Item item = Item.of(mainItem, requestDto);
+        item = itemRepository.saveAndFlush(item);
+        return itemMapper.itemDetails(itemRepository.get(item.getId()));
     }
 
     @Transactional

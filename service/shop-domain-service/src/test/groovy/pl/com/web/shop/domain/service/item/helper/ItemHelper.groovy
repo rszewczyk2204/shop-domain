@@ -56,6 +56,7 @@ class ItemHelper {
         assert entity.available == details.available
         assert entity.price == details.price
         assert entity.quantity == details.quantity
+        assert entity.linkedItems.size() == details.linkedItems.size()
         true
     }
 

@@ -7,6 +7,7 @@ import lombok.NoArgsConstructor;
 import javax.annotation.Nullable;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
+import java.util.UUID;
 
 @Data
 @NoArgsConstructor
@@ -24,4 +25,7 @@ public class ItemCreateRequestDto {
 
     @NotNull
     private Double price;
+
+    @Nullable
+    private UUID mainItemId;
 }
