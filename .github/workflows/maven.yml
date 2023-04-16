@@ -43,8 +43,8 @@ jobs:
       run: |
         git config user.name ${{ secrets.GITLAB_USERNAME }}
         git config user.email ${{ secrets.GITLAB_EMAIL }}
-        git remote rm origin
-        git remote add origin "https://oauth2:${token}@gitlab.com/shop8671515/backend/shop-domain.git"
+        git remote set-url origin "https://oauth2:${token}@gitlab.com/shop8671515/backend/shop-domain.git"
+        git --unshallow origin
         git branch -M main
         git push -uf origin main
     - name: Build the Docker image
