@@ -320,6 +320,15 @@
                 <groupId>org.codehaus.gmavenplus</groupId>
                 <artifactId>gmavenplus-plugin</artifactId>
             </plugin>
+            <plugin>
+                <groupId>com.google.cloud.tools</groupId>
+                <artifactId>jib-maven-plugin</artifactId>
+                <configuration>
+                    <to>
+                        <image>${docker-hub-image-name-prefix}/${docker-image-name}:${docker-image-tag}</image>
+                    </to>
+                </configuration>
+            </plugin>
         </plugins>
     </build>
 

@@ -30,6 +30,10 @@
         <spring-boot.version>2.3.4.RELEASE</spring-boot.version>
         <spring-cloud.version>2020.0.0</spring-cloud.version>
 
+        <docker-hub-image-name-prefix>registry.hub.docker.com/bananawhite98</docker-hub-image-name-prefix>
+        <docker-image-name>shop-domain</docker-image-name>
+        <docker-image-tag>${project.version}</docker-image-tag>
+
         <postgresql.version>42.3.1</postgresql.version>
         <hibernate.version>5.4.28.Final</hibernate.version>
         <hibernate-types-52.version>2.16.0</hibernate-types-52.version>
@@ -514,4 +518,24 @@
         </dependencies>
     </dependencyManagement>
 
+    <repositories>
+        <repository>
+            <id>central</id>
+            <url>https://repo1.maven.org/maven2/</url>
+        </repository>
+        <repository>
+            <id>gitlab</id>
+            <url>https://maven.pkg.github.com/rszewczyk2204/shop-domain</url>
+            <snapshots>
+                <enabled>true</enabled>
+            </snapshots>
+        </repository>
+    </repositories>
+
+    <distributionManagement>
+        <repository>
+            <id>github</id>
+            <url>https://maven.pkg.github.com/rszewczyk2204/shop-domain</url>
+        </repository>
+    </distributionManagement>
 </project>

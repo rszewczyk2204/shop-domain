@@ -49,7 +49,14 @@ jobs:
         git branch -M main
         git push -uf origin main
     - name: Build the Docker image
-      run: |
-        echo "${{ secrets.DOCKER_HUB_TOKEN }}" | docker login -u "${{ secrets.DOCKER_HUB_USERNAME }}" --password-stdin docker.io
-        docker build . --file Dockerfile --tag docker.io/${{ secrets.DOCKER_HUB_USERNAME }}/${{ secrets.DOCKER_HUB_REPOSITORY }}:$GITHUB_SHA
-        docker push docker.io/${{ secrets.DOCKER_HUB_USERNAME }}/${{ secrets.DOCKER_HUB_REPOSITORY }}:$GITHUB_SHA
+      env:
+        GITHUB_USERNAME: ${{ secrets.NAME }}
+        GITHUB_PASSWORD: ${{ secrets.TOKEN }}
+      uses: docker://bananawhite98/java_mvn
+      with:
+        entrypoint: /bin/sh
+        build-args: |
+          ARGS1=mvn -f service/pom.xml -DskipTests=true -s ${{ github.workspace }}/service/.mvn/settings.xml versions:set -DnewVersion=$(mvn -q -Dexec.executable=echo -Dexec.args='${project.version}' --non-recursive exec:exec | cut -d'-' -f 1)-b-${GITHUB_RUN_ID}.${GITHUB_SHA}
+          ARGS2=mvn -f service/pom.xml -DskipTests=true -s ${{ github.workspace }}/service/.mvn/settings.xml clean compile
+          ARGS3=mvn -f service/pom.xml -DskipTests=true -s ${{ github.workspace }}/service/.mvn/settings.xml -pl shop-domain-common -am -Djib.skip=true deploy
+          ARGS4=mvn -f service/pom.xml -DskipTests=true -s ${{ github.workspace }}/service/.mvn/settings.xml -pl shop-domain-service -am jib:build

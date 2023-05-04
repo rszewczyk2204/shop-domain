@@ -1,0 +1,315 @@
+<?xml version="1.0"?>
+<ruleset name="Custom Rules" xmlns="http://pmd.sourceforge.net/ruleset/2.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://pmd.sourceforge.net/ruleset/2.0.0 https://pmd.sourceforge.io/ruleset_2_0_0.xsd">
+    <description> PMD ruleset.</description>
+
+    <rule ref="category/java/design.xml/UseUtilityClass">
+        <properties>
+            <property name="ignoredAnnotations"
+                      value="org.springframework.boot.autoconfigure.SpringBootApplication|lombok.experimental.UtilityClass"/>
+        </properties>
+    </rule>
+
+    <rule ref="category/java/design.xml/NPathComplexity">
+        <properties>
+            <property name="reportLevel" value="200"/>
+        </properties>
+    </rule>
+
+    <rule ref="category/java/errorprone.xml/AvoidLiteralsInIfCondition">
+        <properties>
+            <property name="ignoreMagicNumbers" value="-1,0,0L,1,2"/>
+            <property name="ignoreExpressions" value="true"/>
+        </properties>
+    </rule>
+
+    <rule ref="category/java/bestpractices.xml">
+        <!-- fałszywy pozytyw dla enumów -->
+        <!-- spotbugs potrafi wykryć brakującą wartość -->
+        <exclude name="SwitchStmtsShouldHaveDefault"/>
+        <exclude name="ConstantsInInterface"/>
+        <exclude name="GuardLogStatement"/>
+        <exclude name="UseVarargs"/>
+    </rule>
+
+    <rule ref="category/java/codestyle.xml">
+        <exclude name="AtLeastOneConstructor"/>
+        <exclude name="IfElseStmtsMustUseBraces"/>
+        <exclude name="LocalVariableCouldBeFinal"/>
+        <exclude name="MethodArgumentCouldBeFinal"/>
+        <exclude name="OnlyOneReturn"/>
+        <exclude name="PrematureDeclaration"/>
+        <exclude name="ShortVariable"/>
+        <exclude name="WhileLoopsMustUseBraces"/>
+        <exclude name="ConfusingTernary"/>
+        <!-- można dokonfigurować -->
+        <exclude name="ClassNamingConventions"/>
+        <exclude name="FieldNamingConventions"/>
+        <exclude name="LongVariable"/>
+        <exclude name="ShortClassName"/>
+        <exclude name="ShortMethodName"/>
+        <exclude name="TooManyStaticImports"/>
+        <exclude name="EmptyMethodInAbstractClassShouldBeAbstract"/>
+    </rule>
+
+    <rule ref="category/java/design.xml">
+        <exclude name="LawOfDemeter"/>
+        <exclude name="NPathComplexity"/>
+        <exclude name="ExcessiveImports"/>
+        <exclude name="FinalFieldCouldBeStatic"/>
+        <!-- można dokonfigurować -->
+        <exclude name="LoosePackageCoupling"/>
+        <exclude name="CyclomaticComplexity"/>
+        <exclude name="TooManyMethods"/>
+        <exclude name="NcssCount"/>
+        <!-- warto włączyć -->
+        <exclude name="ExcessiveMethodLength"/>
+        <exclude name="GodClass"/>
+        <exclude name="UseObjectForClearerAPI"/>
+        <exclude name="TooManyFields"/>
+    </rule>
+
+    <rule ref="category/java/documentation.xml">
+        <exclude name="CommentRequired"/>
+        <exclude name="CommentSize"/>
+        <exclude name="UncommentedEmptyMethodBody"/>
+    </rule>
+
+    <rule ref="category/java/errorprone.xml">
+        <exclude name="DataflowAnomalyAnalysis"/>
+        <exclude name="NullAssignment"/>
+        <!-- dobrze by było włączyć -->
+        <exclude name="BeanMembersShouldSerialize"/>
+        <exclude name="AvoidDuplicateLiterals"/>
+        <exclude name="MissingSerialVersionUID"/>
+    </rule>
+
+    <rule ref="category/java/multithreading.xml">
+        <!-- causes false-positives in local allocation… -->
+        <exclude name="UseConcurrentHashMap"/>
+    </rule>
+
+    <rule ref="category/java/performance.xml">
+        <exclude name="TooFewBranchesForASwitchStatement"/>
+    </rule>
+
+    <rule ref="category/java/security.xml"/>
+
+    <rule ref="category/java/bestpractices.xml/UnusedPrivateMethod">
+        <properties>
+            <property name="ignoredAnnotations"
+                      value="javax.validation.constraints.AssertTrue|javax.validation.constraints.AssertFalse|javax.persistence.PreUpdate"/>
+        </properties>
+    </rule>
+    <rule name="MissingMethodArgValidation"
+          language="java"
+          message="Non-primitive method arguments must be validated!"
+          class="net.sourceforge.pmd.lang.rule.XPathRule">
+        <description>
+            Reports method arguments that lack validation. Primitive
+            values and methods with @Override are ignored. MapStruct
+            classes are ignored as well.
+        </description>
+        <priority>1</priority>
+        <properties>
+            <property name="version" value="2.0"/>
+            <property name="xpath">
+                <value>
+                    <![CDATA[
+//TypeDeclaration[not(.//Annotation//Name[@Image="Mapper" or @Image="RestControllerAdvice"])]
+//ClassOrInterfaceBodyDeclaration[not(.//Annotation/MarkerAnnotation/Name[@Image="Override"])]
+//MethodDeclarator
+//FormalParameter[Type/ReferenceType and not(Annotation/MarkerAnnotation/Name[
+    @Image="Future" or
+    @Image="FutureOrPresent" or
+    @Image="Negative" or
+    @Image="NegativeOrZero" or
+    @Image="NotBlank" or
+    @Image="NotEmpty" or
+    @Image="NotNull" or
+    @Image="Nullable" or
+    @Image="Past" or
+    @Image="PastOrPresent" or
+    @Image="Positive" or
+    @Image="PositiveOrZero" or
+    @Image="Size"
+])]
+]]>
+                </value>
+            </property>
+        </properties>
+    </rule>
+    <rule name="MissingConstructorValidation"
+          language="java"
+          message="Constructor args must be validated!"
+          class="net.sourceforge.pmd.lang.rule.XPathRule">
+        <description>
+            Reports constructor args that lack validation. Primitive
+            values and bean classes are ignored.
+        </description>
+        <priority>1</priority>
+        <properties>
+            <property name="version" value="2.0"/>
+            <property name="xpath">
+                <value>
+                    <![CDATA[
+//TypeDeclaration[not(.//Annotation//Name[@Image="Service" or @Image="Repository"])]
+  //ClassOrInterfaceBodyDeclaration//ConstructorDeclaration/FormalParameters
+  /FormalParameter[Type/ReferenceType and not(Annotation/MarkerAnnotation/Name[
+    @Image="Future" or
+    @Image="FutureOrPresent" or
+    @Image="Negative" or
+    @Image="NegativeOrZero" or
+    @Image="NotBlank" or
+    @Image="NotEmpty" or
+    @Image="NotNull" or
+    @Image="Nullable" or
+    @Image="Past" or
+    @Image="PastOrPresent" or
+    @Image="Positive" or
+    @Image="PositiveOrZero" or
+    @Image="Size"
+])]
+]]>
+                </value>
+            </property>
+        </properties>
+    </rule>
+    <rule name="MissingFieldValidation"
+          language="java"
+          message="Class fields must be validated!"
+          class="net.sourceforge.pmd.lang.rule.XPathRule">
+        <description>
+            Reports class fields that lack validation. Primitive values
+            and bean classes are ignored.
+        </description>
+        <priority>1</priority>
+        <properties>
+            <property name="version" value="2.0"/>
+            <property name="xpath">
+                <value>
+                    <![CDATA[
+//TypeDeclaration[not(.//Annotation//Name[@Image="Configuration" or @Image="Component" or @Image="Repository" or @Image="RestController" or @Image="Service" or @Image="Validated"])]//ClassOrInterfaceBodyDeclaration[not(Annotation/*/Name[
+    @Image="Future" or
+    @Image="FutureOrPresent" or
+    @Image="Negative" or
+    @Image="NegativeOrZero" or
+    @Image="NotBlank" or
+    @Image="NotEmpty" or
+    @Image="NotNull" or
+    @Image="Nullable" or
+    @Image="Past" or
+    @Image="PastOrPresent" or
+    @Image="Positive" or
+    @Image="PositiveOrZero" or
+    @Image="Size" or
+    @Image="Id" or
+    @Image="OneToMany" or
+    @Image="ManyToOne" or
+    @Image="ElementCollection" or
+    @Image="ManyToMany"
+])]/FieldDeclaration[Type/ReferenceType][@Final=false() or (@Final=true() and VariableDeclarator[@Initializer=false()])]
+]]>
+                </value>
+            </property>
+        </properties>
+    </rule>
+    <rule name="MissingBuilderDefault"
+          language="java"
+          message="Classes with @Builder must have @Builder.Default on fields with default values"
+          class="net.sourceforge.pmd.lang.rule.XPathRule">
+        <description>
+            Reports classes annotated with @[Super]Builder which have
+            fields with default values that are not marked @Builder.Default.
+            Rule can be ignored with @SuppressWarnings(&quot;MissingBuilderDefault&quot;).
+            Fields with @ElementCollection are ignored as well.
+        </description>
+        <priority>1</priority>
+        <properties>
+            <property name="version" value="2.0"/>
+            <property name="xpath">
+                <value>
+                    <![CDATA[
+  //TypeDeclaration[./Annotation/*/Name[@Image="Builder" or @Image="SuperBuilder"]]/ClassOrInterfaceDeclaration/ClassOrInterfaceBody/ClassOrInterfaceBodyDeclaration
+   [ @Kind="FIELD"
+     and .//FieldDeclaration[@Static=false()]//VariableInitializer
+     and not(./Annotation/*[@AnnotationName="Builder.Default"])
+     and not(./Annotation/SingleMemberAnnotation[@AnnotationName="SuppressWarnings" and .//Literal[@Image='"MissingBuilderDefault"']])
+   ]
+  ]]>
+                </value>
+            </property>
+        </properties>
+    </rule>
+    <rule name="OptionalOrElse"
+          language="java"
+          message="Use Objects.requireNonNullElse or other helper instead of Optional"
+          class="net.sourceforge.pmd.lang.rule.XPathRule">
+        <description>
+            Using Optional.ofNullable(val).orElse(def) is suboptimal,
+            and can be replaced with helper methods, e.g. Objects.requireNonNullElse or ObjectUtils.defaultIfNull.
+        </description>
+        <priority>3</priority>
+        <properties>
+            <property name="version" value="2.0"/>
+            <property name="xpath">
+                <value>
+                    <![CDATA[
+  //PrimaryExpression[
+    ./PrimaryPrefix[1]/Name[@Image="Optional.ofNullable" or @Image="ofNullable"]
+     and ./PrimarySuffix[position()=2 and (@Image="orElse" or @Image="orElseGet")]
+  ]
+  ]]>
+                </value>
+            </property>
+        </properties>
+    </rule>
+    <rule name="MissingFetchType"
+          language="java"
+          message="@*ToOne annotations must have fetch provided"
+          class="net.sourceforge.pmd.lang.rule.XPathRule">
+        <description>
+            Reports @ManyToOne or @OneToOne without explicitly stated
+            fetch property. By default, FetchType.EAGER is being used.
+        </description>
+        <priority>3</priority>
+        <properties>
+            <property name="version" value="2.0"/>
+            <property name="xpath">
+                <value>
+                    <![CDATA[
+  //ClassOrInterfaceBodyDeclaration/Annotation/*[
+      (@AnnotationName="ManyToOne" or @AnnotationName="OneToOne")
+          and not(
+              .//Name[
+                  @Image="FetchType.LAZY" or @Image="FetchType.EAGER"]
+          )
+  ]
+  ]]>
+                </value>
+            </property>
+        </properties>
+    </rule>
+    <rule name="ConfigurationPropertiesValidated"
+          language="java"
+          message="Add @Validated to @ConfigurationProperties classes"
+          class="net.sourceforge.pmd.lang.rule.XPathRule">
+        <description>
+            Classes with @ConfigurationProperties must be annotated
+            with @Validated in order to be checked by Spring during context
+            creation.
+        </description>
+        <priority>3</priority>
+        <properties>
+            <property name="version" value="2.0"/>
+            <property name="xpath">
+                <value>
+                    <![CDATA[
+  //TypeDeclaration[Annotation/*[@AnnotationName="ConfigurationProperties"] and not(Annotation/*[@AnnotationName="Validated"])]
+  ]]>
+                </value>
+            </property>
+        </properties>
+    </rule>
+</ruleset>

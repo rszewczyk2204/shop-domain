@@ -1,0 +1,111 @@
+<FindBugsFilter>
+    <Match>
+        <Or>
+            <!-- exclude generated sources (requires addSourceDirs in plugin configuration to work) -->
+            <Source name="~.*/target/generated-sources/.+"/>
+            <!-- False-positives for hibernate-enhanced bytecode -->
+            <Method name="~\$\$_hibernate_.+"/>
+        </Or>
+    </Match>
+    <Match>
+        <Class name="~.+MapperImpl.*"/>
+    </Match>
+    <Match>
+        <Class name="~.*\.Q.*"/>
+    </Match>
+    <Match>
+        <AnnotatedWith name="lombok.Generated"/>
+        <Bug pattern="USBR_UNNECESSARY_STORE_BEFORE_RETURN"/>
+    </Match>
+    <Match>
+        <Or>
+            <Bug pattern="EXS_EXCEPTION_SOFTENING_NO_CONSTRAINTS"/>
+            <!-- Causes false-positives for Enum.values() -->
+            <Bug pattern="SSCU_SUSPICIOUS_SHADED_CLASS_USE"/>
+            <!-- Creates problem if making use of classes with single responsibility -->
+            <Bug pattern="CE_CLASS_ENVY"/>
+            <!-- Alerts about multiple method calls, causes false-positives for example, when using static method creators -->
+            <Bug pattern="PRMC_POSSIBLY_REDUNDANT_METHOD_CALLS"/>
+            <!-- sometimes one just want to use setAccesible in reflection -->
+            <Bug pattern="RFI_SET_ACCESSIBLE"/>
+            <!-- it causes errors with large enums -->
+            <Bug pattern="CC_CYCLOMATIC_COMPLEXITY"/>
+        </Or>
+    </Match>
+    <Match>
+        <And>
+            <Class name="~.+SpringApplicationContext.*"/>
+            <Bug pattern="ST_WRITE_TO_STATIC_FROM_INSTANCE_METHOD"/>
+        </And>
+    </Match>
+    <Match>
+        <And>
+            <Class name="~.+Application.*"/>
+            <Bug pattern="FCCD_FIND_CLASS_CIRCULAR_DEPENDENCY"/>
+        </And>
+    </Match>
+    <Match>
+        <And>
+            <Class name="~.+PermissionApplicationData.*"/>
+            <Bug pattern="FCCD_FIND_CLASS_CIRCULAR_DEPENDENCY"/>
+        </And>
+    </Match>
+    <Match>
+        <And>
+            <Class name="~.+ProceedingKreptdGroupSequenceProvider.*"/>
+            <Bug pattern="FCCD_FIND_CLASS_CIRCULAR_DEPENDENCY"/>
+        </And>
+    </Match>
+    <Match>
+        <And>
+            <Class name="~.+CategoryToValidation.*"/>
+            <Bug pattern="FCCD_FIND_CLASS_CIRCULAR_DEPENDENCY"/>
+        </And>
+    </Match>
+    <Match>
+        <And>
+            <Class name="~.+Driver.*"/>
+            <Bug pattern="FCCD_FIND_CLASS_CIRCULAR_DEPENDENCY"/>
+        </And>
+    </Match>
+    <Match>
+        <And>
+            <Class name="~.+CarrierAssociationMembership.*"/>
+            <Bug pattern="FCCD_FIND_CLASS_CIRCULAR_DEPENDENCY"/>
+        </And>
+    </Match>
+    <Match>
+        <And>
+            <Class name="~.+SCertificate.*"/>
+            <Bug pattern="FCCD_FIND_CLASS_CIRCULAR_DEPENDENCY"/>
+        </And>
+    </Match>
+    <Match>
+        <And>
+            <Class name="~.+SpoForeignPermissionHandler.*"/>
+            <Bug pattern="FII_USE_METHOD_REFERENCE"/>
+        </And>
+    </Match>
+    <Match>
+        <Source name="~.*\.kt"/>
+    </Match>
+    <Match>
+        <And>
+            <Class name="~.+Proceeding.*"/>
+            <Bug pattern="FCCD_FIND_CLASS_CIRCULAR_DEPENDENCY"/>
+        </And>
+    </Match>
+    <Match>
+        <And>
+            <Class name="~.+EpuapConfiguration.*"/>
+            <Bug pattern="NP_NONNULL_RETURN_VIOLATION"/>
+        </And>
+    </Match>
+    <Match>
+        <And>
+            <Class name="~.+EpuapServiceImpl.*"/>
+            <Bug pattern="NP_PARAMETER_MUST_BE_NONNULL_BUT_MARKED_AS_NULLABLE"/>
+        </And>
+    </Match>
+
+</FindBugsFilter>

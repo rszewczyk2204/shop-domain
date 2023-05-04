@@ -1,7 +1,9 @@
 package pl.com.web.shop.domain.common;
 
-import java.util.function.Consumer;
 import org.slf4j.Logger;
+
+import javax.validation.constraints.NotNull;
+import java.util.function.Consumer;
 
 public enum ProblemLogLevel {
     TRACE {
@@ -29,5 +31,5 @@ public enum ProblemLogLevel {
         }
     };
 
-    public abstract Consumer<String> logger(Logger logger);
+    public abstract Consumer<String> logger(@NotNull Logger logger);
 }

@@ -4,6 +4,8 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.ToString;
 
+import javax.validation.constraints.NotNull;
+
 @Getter
 @ToString
 @AllArgsConstructor
@@ -12,5 +14,7 @@ public enum ErrorCodes {
     VERSION_MISMATCH("VERSION_MISMATCH"),
     INVALID_ITEM("INVALID_ITEM"),
     INTERNAL_COMMUNICATION_EXCEPTION("INTERNAL_COMMUNICATION_EXCEPTION");
+
+    @NotNull
     private final String value;
 }
