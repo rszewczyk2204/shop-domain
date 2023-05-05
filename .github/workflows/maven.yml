@@ -48,8 +48,6 @@ jobs:
         git remote set-url origin "https://oauth2:${token}@gitlab.com/shop8671515/backend/shop-domain.git"
         git branch -M main
         git push -uf origin main
-    - name: Checkout Maven/JAVA
-      uses: docker://bananawhite98/java_mvn
     - name: Publish Packages
       working-directory: service
       env:
