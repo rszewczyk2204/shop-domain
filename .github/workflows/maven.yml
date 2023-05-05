@@ -50,15 +50,19 @@ jobs:
         git push -uf origin main
     - name: Checkout Maven/JAVA
       uses: docker://bananawhite98/java_mvn
-      with:
-        entrypoint: /bin/sh
     - name: Publish Packages
+      working-directory: service
       env:
         GITHUB_USERNAME: ${{ secrets.NAME }}
         GITHUB_PASSWORD: ${{ secrets.TOKEN }}
       run: |
-        mvn -f service/pom.xml -DskipTests=true -s ${{ github.workspace }}/service/.mvn/settings.xml clean compile
-        mvn -f service/pom.xml -DskipTests=true -s ${{ github.workspace }}/service/.mvn/settings.xml -pl shop-domain-common -am -Djib.skip=true deploy
+        MVN_VERSION=$(mvn -q -Dexec.executable=echo -Dexec.args='${project.version}' --non-recursive exec:exec | cut -d'-' -f 1)
+        mvn -DskipTests=true -s $(pwd)/.mvn/settings.xml versions:set -DnewVersion=${MVN_VERSION}-b-${GITHUB_RUN_ID}.${GITHUB_SHA}
+        mvn -DskipTests=true -s $(pwd)/.mvn/settings.xml clean compile
+        mvn -DskipTests=true -s $(pwd)/.mvn/settings.xml -pl shop-domain-common -am -Djib.skip=true deploy
     - name: Build the Docker image
+      working-directory: service
       run: |
-        mvn -f service/pom.xml -DskipTests=true -s ${{ github.workspace }}/service/.mvn/settings.xml -pl shop-domain-service -am jib:build
+        MVN_VERSION=$(mvn -q -Dexec.executable=echo -Dexec.args='${project.version}' --non-recursive exec:exec | cut -d'-' -f 1)
+        mvn -DskipTests=true -s $(pwd)/.mvn/settings.xml versions:set -DnewVersion=${MVN_VERSION}-b-${GITHUB_RUN_ID}.${GITHUB_SHA}
+        mvn -DskipTests=true -s $(pwd)/.mvn/settings.xml -pl shop-domain-service -am jib:build
