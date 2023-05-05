@@ -57,10 +57,10 @@ jobs:
         GITHUB_USERNAME: ${{ secrets.NAME }}
         GITHUB_PASSWORD: ${{ secrets.TOKEN }}
       run: |
-        mvn -f service/pom.xml -DskipTests=true -s ${{ github.workspace }}/service/.mvn/settings.xml versions:set -DnewVersion=$(mvn -q -Dexec.executable=echo -Dexec.args='${project.version}' --non-recursive exec:exec | cut -d'-' -f 1)-b-${GITHUB_RUN_ID}.${GITHUB_SHA}
+#        mvn -f service/pom.xml -DskipTests=true -s ${{ github.workspace }}/service/.mvn/settings.xml versions:set -DnewVersion=$(mvn -q -Dexec.executable=echo -Dexec.args='${project.version}' --non-recursive exec:exec | cut -d'-' -f 1)-b-${GITHUB_RUN_ID}.${GITHUB_SHA}
         mvn -f service/pom.xml -DskipTests=true -s ${{ github.workspace }}/service/.mvn/settings.xml clean compile
         mvn -f service/pom.xml -DskipTests=true -s ${{ github.workspace }}/service/.mvn/settings.xml -pl shop-domain-common -am -Djib.skip=true deploy
     - name: Build the Docker image
       run: |
-        mvn -f service/pom.xml -DskipTests=true -s ${{ github.workspace }}/service/.mvn/settings.xml versions:set -DnewVersion=$(mvn -q -Dexec.executable=echo -Dexec.args='${project.version}' --non-recursive exec:exec | cut -d'-' -f 1)-b-${GITHUB_RUN_ID}.${GITHUB_SHA}
+#        mvn -f service/pom.xml -DskipTests=true -s ${{ github.workspace }}/service/.mvn/settings.xml versions:set -DnewVersion=$(mvn -q -Dexec.executable=echo -Dexec.args='${project.version}' --non-recursive exec:exec | cut -d'-' -f 1)-b-${GITHUB_RUN_ID}.${GITHUB_SHA}
         mvn -f service/pom.xml -DskipTests=true -s ${{ github.workspace }}/service/.mvn/settings.xml -pl shop-domain-service -am jib:build
