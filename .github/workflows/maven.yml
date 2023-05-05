@@ -60,6 +60,9 @@ jobs:
         mvn -DskipTests=true -s $(pwd)/.mvn/settings.xml -pl shop-domain-common -am -Djib.skip=true deploy
     - name: Build the Docker image
       working-directory: service
+      env:
+        DOCKER_HUB_USERNAME: ${{ secrets.DOCKER_HUB_USERNAME }}
+        DOCKER_HUB_PASSWORD: ${{ secrets.DOCKER_HUB_PASSWORD }}
       run: |
         MVN_VERSION=$(mvn -q -Dexec.executable=echo -Dexec.args='${project.version}' --non-recursive exec:exec | cut -d'-' -f 1)
         mvn -DskipTests=true -s $(pwd)/.mvn/settings.xml versions:set -DnewVersion=${MVN_VERSION}-b-${GITHUB_RUN_ID}.${GITHUB_SHA}
