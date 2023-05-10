@@ -278,6 +278,30 @@
             <artifactId>spring-boot-starter-web</artifactId>
         </dependency>
 
+        <dependency>
+            <groupId>pl.com.bit</groupId>
+            <artifactId>common-versioned-entity</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>pl.com.bit</groupId>
+            <artifactId>http-problem</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>pl.com.bit</groupId>
+            <artifactId>common</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>pl.com.bit</groupId>
+            <artifactId>common-api</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>pl.com.bit</groupId>
+            <artifactId>http-problem-spring-boot-starter</artifactId>
+        </dependency>
+
     </dependencies>
 
     <build>
