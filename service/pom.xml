@@ -532,6 +532,12 @@
                 <groupId>pl.com.bit</groupId>
                 <artifactId>common-api</artifactId>
                 <version>${stack.common.version}</version>
+                <exclusions>
+                    <exclusion>
+                        <groupId>org.codehaus.groovy</groupId>
+                        <artifactId>*</artifactId>
+                    </exclusion>
+                </exclusions>
             </dependency>
 
             <dependency>
