@@ -32,6 +32,10 @@
             <groupId>javax.validation</groupId>
             <artifactId>validation-api</artifactId>
         </dependency>
+        <dependency>
+            <groupId>pl.com.bit</groupId>
+            <artifactId>http-problem</artifactId>
+        </dependency>
     </dependencies>
 
     <build>

@@ -5,9 +5,9 @@ import com.querydsl.jpa.impl.JPAQueryFactory;
 import org.hibernate.graph.GraphSemantic;
 import org.springframework.data.jpa.repository.support.QuerydslRepositorySupport;
 import org.springframework.stereotype.Repository;
-import pl.com.web.shop.domain.common.Predicates;
-import pl.com.web.shop.domain.item.model.entity.QItem;
+import pl.com.bit.common.querydsl.Predicates;
 import pl.com.web.shop.domain.item.model.entity.Item;
+import pl.com.web.shop.domain.item.model.entity.QItem;
 import pl.com.web.shop.domain.item.model.outside.ItemsSearchFilter;
 
 import javax.persistence.EntityManager;

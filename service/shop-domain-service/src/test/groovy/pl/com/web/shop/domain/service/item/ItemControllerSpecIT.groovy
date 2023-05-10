@@ -5,8 +5,7 @@ import org.springframework.core.ParameterizedTypeReference
 import org.springframework.data.domain.Page
 import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
-import pl.com.web.shop.domain.common.Problem
-import pl.com.web.shop.domain.exception.message.ErrorCodes
+import pl.com.bit.http.problem.Problem
 import pl.com.web.shop.domain.item.model.entity.Item
 import pl.com.web.shop.domain.item.model.outside.ItemCreateRequest
 import pl.com.web.shop.domain.item.model.outside.ItemDetails
@@ -18,6 +17,7 @@ import pl.com.web.shop.domain.service.common.ShopRestSpecIT.ShopRestSpecIT
 import pl.com.web.shop.domain.service.item.helper.ItemApiHelper
 import pl.com.web.shop.domain.service.item.helper.ItemHelper
 import pl.com.web.shop.domain.service.item.helper.ItemServiceHelper
+import pl.com.web.shop.domain.api.ErrorCodes;
 
 class ItemControllerSpecIT extends ShopRestSpecIT {
 

@@ -1,6 +1,6 @@
 package pl.com.web.shop.domain.common;
 
-import pl.com.web.shop.domain.exception.ElementVersionMismatchException;
+import pl.com.bit.common.exception.ElementVersionMismatchException;
 
 import javax.validation.constraints.NotNull;
 import java.util.Objects;

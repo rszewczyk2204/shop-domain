@@ -7,7 +7,7 @@ import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
 import lombok.experimental.SuperBuilder;
-import pl.com.web.shop.domain.common.VersionedEntity;
+import pl.com.bit.common.versioned.entity.VersionedEntity;
 import pl.com.web.shop.domain.item.model.dto.ItemCreateRequestDto;
 import pl.com.web.shop.domain.item.model.dto.ItemUpdateRequestDto;
 import pl.com.web.shop.domain.specification.model.entity.Specification;
