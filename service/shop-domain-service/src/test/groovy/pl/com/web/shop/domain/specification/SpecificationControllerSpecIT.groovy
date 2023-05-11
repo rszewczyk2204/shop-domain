@@ -1,22 +1,22 @@
-package pl.com.web.shop.domain.service.specification
+package pl.com.web.shop.domain.specification
 
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
+import pl.com.web.shop.domain.BaseITSpecification
+import pl.com.web.shop.domain.item.helper.ItemServiceHelper
 import pl.com.web.shop.domain.item.model.entity.Item
 import pl.com.web.shop.domain.item.repository.ItemRepository
-import pl.com.web.shop.domain.service.common.ShopRestSpecIT.ShopRestSpecIT
-import pl.com.web.shop.domain.service.item.helper.ItemServiceHelper
-import pl.com.web.shop.domain.service.specification.helper.SpecificationApiHelper
-import pl.com.web.shop.domain.service.specification.helper.SpecificationHelper
-import pl.com.web.shop.domain.service.specification.helper.SpecificationServiceHelper
+import pl.com.web.shop.domain.specification.helper.SpecificationApiHelper
+import pl.com.web.shop.domain.specification.helper.SpecificationHelper
+import pl.com.web.shop.domain.specification.helper.SpecificationServiceHelper
 import pl.com.web.shop.domain.specification.model.entity.Specification
 import pl.com.web.shop.domain.specification.model.outside.SpecificationCreateRequest
 import pl.com.web.shop.domain.specification.model.outside.SpecificationDetails
 import pl.com.web.shop.domain.specification.model.outside.SpecificationUpdateRequest
 import pl.com.web.shop.domain.specification.repository.SpecificationRepository
 
-class SpecificationControllerSpecIT extends ShopRestSpecIT {
+class SpecificationControllerSpecIT extends BaseITSpecification {
     static final String BASE_URL = "/shop-domain/items/{itemId}/specifications"
     static final String ID_URL = "${BASE_URL}/{specificationId}"
 

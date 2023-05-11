@@ -7,6 +7,7 @@ import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
 import lombok.experimental.SuperBuilder;
+import pl.com.bit.common.named.object.entity.NamedObjectSnap;
 import pl.com.bit.common.versioned.entity.VersionedEntity;
 import pl.com.web.shop.domain.item.model.dto.ItemCreateRequestDto;
 import pl.com.web.shop.domain.item.model.dto.ItemUpdateRequestDto;
@@ -79,12 +80,14 @@ public class Item extends VersionedEntity {
     private Set<Specification> specifications = new HashSet<>();
 
 
-    public static Item of(@Nullable @Valid Item mainItem, @NotNull @Valid ItemCreateRequestDto requestDto) {
+    public static Item of(@NotNull NamedObjectSnap user, @Nullable @Valid Item mainItem, @NotNull @Valid ItemCreateRequestDto requestDto) {
         Item item = Item.builder()
                 .name(requestDto.getName())
                 .available(requestDto.getAvailable())
                 .description(requestDto.getDescription())
                 .price(requestDto.getPrice())
+                .author(user)
+                .authorId(user.getCid())
                 .build();
         if (Objects.nonNull(mainItem)) {
             item.getLinkedItems().add(mainItem);
@@ -92,14 +95,16 @@ public class Item extends VersionedEntity {
         return item;
     }
 
-    public void update(@NotNull @Valid ItemUpdateRequestDto requestDto) {
+    public void update(@NotNull NamedObjectSnap user, @NotNull @Valid ItemUpdateRequestDto requestDto) {
         setName(requestDto.getName());
         setDescription(requestDto.getDescription());
         setAvailable(requestDto.getAvailable());
         setPrice(requestDto.getPrice());
+        setModifier(user);
     }
 
-    public void linkItem(Item itemToLink) {
+    public void linkItem(@NotNull NamedObjectSnap user, @NotNull @Valid Item itemToLink) {
+        setModifier(user);
         linkedItems.add(itemToLink);
     }
 }

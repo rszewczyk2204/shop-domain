@@ -6,6 +6,7 @@ import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
 import lombok.experimental.SuperBuilder;
+import pl.com.bit.common.named.object.entity.NamedObjectSnap;
 import pl.com.bit.common.versioned.entity.VersionedEntity;
 import pl.com.web.shop.domain.item.model.entity.Item;
 import pl.com.web.shop.domain.specification.model.dto.SpecificationCreateRequestDto;
@@ -53,15 +54,18 @@ public class Specification extends VersionedEntity {
     @JoinColumn(name = "item_id")
     private Item item;
 
-    public static Specification of(@NotNull @Valid Item item, @NotNull @Valid SpecificationCreateRequestDto requestDto) {
+    public static Specification of(@NotNull NamedObjectSnap user, @NotNull @Valid Item item, @NotNull @Valid SpecificationCreateRequestDto requestDto) {
         return Specification.builder()
                 .name(requestDto.getName())
                 .value(requestDto.getValue())
                 .item(item)
+                .author(user)
+                .authorId(user.getCid())
                 .build();
     }
 
-    public void update(@NotNull @Valid SpecificationUpdateRequestDto requestDto) {
+    public void update(@NotNull NamedObjectSnap user, @NotNull @Valid SpecificationUpdateRequestDto requestDto) {
+        setModifier(user);
         setName(requestDto.getName());
         setValue(requestDto.getValue());
     }

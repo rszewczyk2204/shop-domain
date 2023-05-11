@@ -9,6 +9,7 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.querydsl.QuerydslPredicateExecutor;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
+import pl.com.bit.common.named.object.entity.NamedObjectSnap;
 import pl.com.web.shop.domain.common.BaseRepository;
 import pl.com.web.shop.domain.common.PageUtils;
 import pl.com.web.shop.domain.exception.ObjectNotFoundException;
@@ -47,6 +48,6 @@ public interface ItemRepository extends BaseRepository, JpaRepository<Item, UUID
     }
 
     @Modifying
-    @Query("UPDATE Item i SET i.deleted = TRUE WHERE i.id = ?1")
-    int softDeleteById(@NotNull UUID id);
+    @Query("UPDATE Item i SET i.deleted = TRUE, i.modifier = ?1 WHERE i.id = ?2")
+    int softDeleteById(@NotNull NamedObjectSnap user, @NotNull UUID id);
 }
