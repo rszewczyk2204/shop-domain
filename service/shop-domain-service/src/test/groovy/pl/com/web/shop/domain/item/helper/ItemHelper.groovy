@@ -1,10 +1,15 @@
-package pl.com.web.shop.domain.service.item.helper
+package pl.com.web.shop.domain.item.helper
 
 import pl.com.web.shop.domain.item.model.entity.Item
 import pl.com.web.shop.domain.item.model.outside.ItemCreateRequest
 import pl.com.web.shop.domain.item.model.outside.ItemDetails
 import pl.com.web.shop.domain.item.model.outside.ItemUpdateRequest
 import pl.com.web.shop.domain.item.model.outside.LinkItemRequest
+
+import java.time.OffsetDateTime
+
+import static pl.com.web.shop.domain.common.ShopRestSpecIT.VersionedEntityHelper.buildVersionedEntity
+
 
 class ItemHelper {
     private static Map defaultItemEntityArgs() {
@@ -22,6 +27,11 @@ class ItemHelper {
         args << customArgs
 
         def item = Item.builder()
+            .copyVersionedDataFrom(buildVersionedEntity(args))
+            .id(UUID.randomUUID())
+            .version(0)
+            .created(OffsetDateTime.now())
+            .modified(OffsetDateTime.now())
             .name(args.name as String)
             .description(args.description as String)
             .build()

@@ -1,4 +1,4 @@
-package pl.com.web.shop.domain.service.specification.helper
+package pl.com.web.shop.domain.specification.helper
 
 import pl.com.web.shop.domain.item.model.entity.Item
 import pl.com.web.shop.domain.specification.model.entity.Specification

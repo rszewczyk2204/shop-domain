@@ -1,4 +1,4 @@
-package pl.com.web.shop.domain.service.item.helper
+package pl.com.web.shop.domain.item.helper
 
 import org.springframework.stereotype.Service
 import pl.com.web.shop.domain.item.model.outside.ItemCreateRequest

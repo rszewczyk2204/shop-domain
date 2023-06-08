@@ -3,11 +3,15 @@ ALTER TABLE item
 
 CREATE TABLE specification
 (
-    id UUID NOT NULL PRIMARY KEY,
-    name TEXT NOT NULL,
-    value TEXT NOT NULL,
-    item_id UUID NOT NULL,
-    version INTEGER NOT NULL
+    id              UUID NOT NULL PRIMARY KEY,
+    author_id       UUID NOT NULL,
+    author_type     TEXT DEFAULT 'USER'::TEXT NOT NULL,
+    modifier_id     UUID NOT NULL,
+    modifier_type   TEXT DEFAULT 'USER'::TEXT,
+    name            TEXT NOT NULL,
+    value           TEXT NOT NULL,
+    item_id         UUID NOT NULL,
+    version         INTEGER NOT NULL
 );
 
 ALTER TABLE specification

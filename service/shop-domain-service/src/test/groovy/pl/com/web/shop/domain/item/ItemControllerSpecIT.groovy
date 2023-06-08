@@ -1,4 +1,4 @@
-package pl.com.web.shop.domain.service.item
+package pl.com.web.shop.domain.item
 
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.core.ParameterizedTypeReference
@@ -6,6 +6,11 @@ import org.springframework.data.domain.Page
 import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
 import pl.com.bit.http.problem.Problem
+import pl.com.web.shop.domain.BaseITSpecification
+import pl.com.web.shop.domain.api.ErrorCodes
+import pl.com.web.shop.domain.item.helper.ItemApiHelper
+import pl.com.web.shop.domain.item.helper.ItemHelper
+import pl.com.web.shop.domain.item.helper.ItemServiceHelper
 import pl.com.web.shop.domain.item.model.entity.Item
 import pl.com.web.shop.domain.item.model.outside.ItemCreateRequest
 import pl.com.web.shop.domain.item.model.outside.ItemDetails
@@ -13,13 +18,8 @@ import pl.com.web.shop.domain.item.model.outside.ItemUpdateRequest
 import pl.com.web.shop.domain.item.model.outside.ItemsSearchFilter
 import pl.com.web.shop.domain.item.model.outside.LinkItemRequest
 import pl.com.web.shop.domain.item.repository.ItemRepository
-import pl.com.web.shop.domain.service.common.ShopRestSpecIT.ShopRestSpecIT
-import pl.com.web.shop.domain.service.item.helper.ItemApiHelper
-import pl.com.web.shop.domain.service.item.helper.ItemHelper
-import pl.com.web.shop.domain.service.item.helper.ItemServiceHelper
-import pl.com.web.shop.domain.api.ErrorCodes;
 
-class ItemControllerSpecIT extends ShopRestSpecIT {
+class ItemControllerSpecIT extends BaseITSpecification {
 
     static final String BASE_URL = "/shop-domain/items"
     static final String ID_URL = "${BASE_URL}/{itemId}"

@@ -4,6 +4,9 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.validation.annotation.Validated;
+import pl.com.bit.common.named.object.entity.NamedObjectSnap;
+import pl.com.bit.common.security.api.AccountIdentity;
+import pl.com.bit.user.domain.user.api.snap.UserSnapService;
 import pl.com.web.shop.domain.item.model.entity.Item;
 import pl.com.web.shop.domain.item.repository.ItemRepository;
 import pl.com.web.shop.domain.specification.model.dto.SpecificationCreateRequestDto;
@@ -23,18 +26,23 @@ public class SpecificationService {
     private final SpecificationMapper specificationMapper;
     private final SpecificationRepository specificationRepository;
     private final ItemRepository itemRepository;
+    private final UserSnapService userService;
 
     @Transactional
-    public SpecificationDetails createSpecification(@NotNull UUID itemId, @NotNull @Valid SpecificationCreateRequestDto requestDto) {
+    public SpecificationDetails createSpecification(@NotNull AccountIdentity user, @NotNull UUID itemId, @NotNull @Valid SpecificationCreateRequestDto requestDto) {
+        NamedObjectSnap userSnap = userService.get(user.getId());
+
         Item item = itemRepository.get(itemId);
-        Specification specification = Specification.of(item, requestDto);
+        Specification specification = Specification.of(userSnap, item, requestDto);
         return specificationMapper.specificationDetails(specificationRepository.saveAndFlush(specification));
     }
 
-    public SpecificationDetails updateSpecification(@NotNull UUID itemId, @NotNull UUID specificationId, @NotNull @Valid SpecificationUpdateRequestDto requestDto) {
+    public SpecificationDetails updateSpecification(@NotNull AccountIdentity user, @NotNull UUID itemId, @NotNull UUID specificationId, @NotNull @Valid SpecificationUpdateRequestDto requestDto) {
+        NamedObjectSnap userSnap = userService.get(user.getId());
+
         Specification specification = specificationRepository.getById(specificationId);
         specificationRepository.checkVersion(specification.getVersion(), requestDto.getVersion());
-        specification.update(requestDto);
+        specification.update(userSnap, requestDto);
         return specificationMapper.specificationDetails(specificationRepository.saveAndFlush(specification));
     }
 }

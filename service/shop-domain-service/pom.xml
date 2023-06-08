@@ -8,9 +8,11 @@
         <version>0.0.1-SNAPSHOT</version>
     </parent>
     <artifactId>shop-domain-service</artifactId>
+    <packaging>jar</packaging>
 
     <properties>
         <java.version>11</java.version>
+        <main.basedir>${project.parent.basedir}</main.basedir>
     </properties>
 
     <dependencies>
@@ -18,6 +20,11 @@
             <groupId>org.projectlombok</groupId>
             <artifactId>lombok</artifactId>
             <optional>true</optional>
+        </dependency>
+
+        <dependency>
+            <groupId>pl.com.bit.user</groupId>
+            <artifactId>user-snap-starter</artifactId>
         </dependency>
 
         <dependency>
@@ -66,11 +73,6 @@
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-data-jpa</artifactId>
-        </dependency>
-
-        <dependency>
-            <groupId>org.springframework.cloud</groupId>
-            <artifactId>spring-cloud-starter-bootstrap</artifactId>
         </dependency>
 
         <dependency>
@@ -280,6 +282,11 @@
 
         <dependency>
             <groupId>pl.com.bit</groupId>
+            <artifactId>common-named-object</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>pl.com.bit</groupId>
             <artifactId>common-versioned-entity</artifactId>
         </dependency>
 
@@ -300,6 +307,29 @@
         <dependency>
             <groupId>pl.com.bit</groupId>
             <artifactId>http-problem-spring-boot-starter</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>pl.com.bit</groupId>
+            <artifactId>common-named-object</artifactId>
+            <version>${stack.common.version}</version>
+            <type>test-jar</type>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>pl.com.bit</groupId>
+            <artifactId>security-api-spring-boot-starter</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-security</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>pl.com.bit</groupId>
+            <artifactId>common</artifactId>
+            <version>${stack.common.version}</version>
+            <type>test-jar</type>
+            <scope>test</scope>
         </dependency>
     </dependencies>
 

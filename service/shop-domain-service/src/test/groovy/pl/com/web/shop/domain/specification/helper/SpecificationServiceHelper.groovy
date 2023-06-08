@@ -1,4 +1,4 @@
-package pl.com.web.shop.domain.service.specification.helper
+package pl.com.web.shop.domain.specification.helper
 
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Service
